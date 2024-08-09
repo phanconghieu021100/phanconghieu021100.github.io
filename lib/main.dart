@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:phanconghieu020100/color_text/color_controller.dart';
 import 'package:phanconghieu020100/fonts/font_controller.dart';
+import 'package:phanconghieu020100/reposive/responsive_widget.dart';
 import 'package:phanconghieu020100/screens/setting_screen.dart';
 import 'package:phanconghieu020100/theme/theme_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -67,7 +68,7 @@ class MyApp extends StatelessWidget {
            theme: themeData,
         initialRoute: '/',
         getPages: [
-          GetPage(name: '/', page: () => HomeScreen(),transition: Transition.fadeIn,),
+          GetPage(name: '/', page: () => ResponsiveWidget(),transition: Transition.fadeIn,),
           GetPage(name: '/setting_screen', page: () => const SettingScreen(),transition: Transition.fadeIn,),
         ],
        
