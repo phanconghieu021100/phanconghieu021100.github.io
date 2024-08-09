@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:phanconghieu020100/color_text/color_controller.dart';
 import 'package:phanconghieu020100/fonts/font_controller.dart';
 import 'package:phanconghieu020100/localization_service.dart';
 import 'package:phanconghieu020100/screens/setting_controller.dart';
@@ -18,6 +19,7 @@ class _SettingScreenState extends State<SettingScreen> {
   final SettingController controllerSetting2 = Get.put(SettingController());
   final SettingController controllerSetting = Get.find();
   final FontController fontController = Get.find<FontController>();
+  final ColorController colorController = Get.find();
 
   //
   @override
@@ -99,7 +101,20 @@ class _SettingScreenState extends State<SettingScreen> {
                     }
                   },
                 );
-              })
+              }),
+                ElevatedButton(
+              
+                onPressed: () {
+                  colorController.changeColor(Colors.blue);
+                },
+                child: Text('blue')),
+               ElevatedButton(
+              
+                onPressed: () {
+                  colorController.changeColor(Colors.red);
+                },
+                child: Text('đỏ'),
+              ),
             ],
           ),
         ),
