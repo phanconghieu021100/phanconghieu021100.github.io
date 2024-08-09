@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:phanconghieu020100/color_text/color_controller.dart';
 import 'package:phanconghieu020100/fonts/font_controller.dart';
-import 'package:phanconghieu020100/localization_service.dart';
+import 'package:phanconghieu020100/local/localization_service.dart';
 import 'package:phanconghieu020100/screens/setting_controller.dart';
 import 'package:phanconghieu020100/theme/theme_controller.dart';
 

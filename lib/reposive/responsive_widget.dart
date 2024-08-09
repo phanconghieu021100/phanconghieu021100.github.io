@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:phanconghieu020100/loading/loading_controller.dart';
+import 'package:phanconghieu020100/loading/loading_overlay.dart';
 import 'package:phanconghieu020100/reposive/devicetype.dart';
 import 'package:phanconghieu020100/screens/home_screen.dart';
 
 class ResponsiveWidget extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) {
     if (DeviceType.isPhone(context)) {
@@ -15,9 +19,11 @@ class ResponsiveWidget extends StatelessWidget {
   }
 
   Widget _buildPhoneLayout(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Phone Layout")),
-      body: HomeScreen(),
+    return LoadingOverlay(
+      child: Scaffold(
+         appBar: AppBar(title: Text("Phone Layout")),
+        body: HomeScreen(),
+      ),
     );
   }
 

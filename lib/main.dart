@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_translations/app_translations.dart'; 
 import 'screens/home_screen.dart'; 
-import 'localization_service.dart'; 
+import 'local/localization_service.dart'; 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
