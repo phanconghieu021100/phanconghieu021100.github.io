@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:phanconghieu020100/fonts/font_controller.dart';
 import 'package:phanconghieu020100/localization_service.dart';
 import 'package:phanconghieu020100/screens/setting_controller.dart';
 import 'package:phanconghieu020100/theme/theme_controller.dart';
@@ -15,7 +16,8 @@ class _SettingScreenState extends State<SettingScreen> {
   //
   final ThemeController themeController = Get.find<ThemeController>();
   final SettingController controllerSetting2 = Get.put(SettingController());
-  final SettingController controllerSetting =  Get.find();
+  final SettingController controllerSetting = Get.find();
+  final FontController fontController = Get.find<FontController>();
 
   //
   @override
@@ -41,7 +43,7 @@ class _SettingScreenState extends State<SettingScreen> {
               ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                         controllerSetting.selectedButtonIndex.value == 1
+                        controllerSetting.selectedButtonIndex.value == 1
                             ? Colors.red
                             : Colors.white)),
                 onPressed: () {
@@ -53,13 +55,12 @@ class _SettingScreenState extends State<SettingScreen> {
               ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                                 controllerSetting.selectedButtonIndex.value == 2
+                        controllerSetting.selectedButtonIndex.value == 2
                             ? Colors.red
                             : Colors.white)),
                 onPressed: () {
                   LocalizationService().changeLocale('zh');
-                              controllerSetting.selectButton(2);
-                  
+                  controllerSetting.selectButton(2);
                 },
                 child: Text('Trung Quốc'),
               ),
@@ -81,6 +82,24 @@ class _SettingScreenState extends State<SettingScreen> {
                   themeController.changeTheme(AppTheme.custom);
                 },
               ),
+              Obx(() {
+                return DropdownButton<String>(
+                  value: fontController.selectedFontKey.value,
+                  items: [
+                    DropdownMenuItem(value: 'roboto', child: Text('Roboto')),
+                    DropdownMenuItem(value: 'lato', child: Text('Lato')),
+                     DropdownMenuItem(
+                        value: 'pacifico', child: Text('pacifico')),
+                    DropdownMenuItem(
+                        value: 'quicksan', child: Text('Quicksan')),
+                  ],
+                  onChanged: (value) {
+                    if (value != null) {
+                      fontController.changeFont(value);
+                    }
+                  },
+                );
+              })
             ],
           ),
         ),

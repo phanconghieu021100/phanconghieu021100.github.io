@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:phanconghieu020100/fonts/font_controller.dart';
 import 'package:phanconghieu020100/screens/setting_screen.dart';
 import 'package:phanconghieu020100/theme/theme_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,6 +16,8 @@ void main() async {
   Get.put(ThemeController());
 
   final themeController = Get.find<ThemeController>();
+   final FontController fontController = Get.put(FontController());
+
 
   Locale locale;
   try {
