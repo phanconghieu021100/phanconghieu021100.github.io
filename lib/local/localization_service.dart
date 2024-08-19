@@ -28,6 +28,7 @@ class LocalizationService {
   Future<void> saveLocale(Locale locale) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(languageCodeKey, locale.languageCode);
+    print (locale.languageCode);
   }
 
   void changeLocale(String languageCode) {

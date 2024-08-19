@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:phanconghieu020100/main.dart';
 
 enum AppTheme { light, dark, custom }
 
@@ -18,12 +17,12 @@ class ThemeController extends GetxController {
 
   void changeTheme(AppTheme themeMode) async {
     _themeMode.value = themeMode;
-    final prefs = await SharedPreferences.getInstance();
+    
     await prefs.setString(themeModeKey, themeMode.toString());
   }
 
   void _loadThemeMode() async {
-    final prefs = await SharedPreferences.getInstance();
+   
     final savedTheme = prefs.getString(themeModeKey);
     if (savedTheme != null) {
       _themeMode.value = AppTheme.values.firstWhere(
