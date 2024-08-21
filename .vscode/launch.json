@@ -1,0 +1,28 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "DEV",
+        "program": "lib/main_develop.dart",
+        "request": "launch",
+        "type": "dart",
+        "dart-define": "FLAVOR=DEV"
+      },
+      {
+        "name": "STAG",
+        "program": "lib/main_staging.dart",
+        "request": "launch",
+        "type": "dart",
+        "dart-define": "FLAVOR=STAG"
+      },
+      {
+        "name": "PROD",
+        "program": "lib/main.dart",
+        "request": "launch",
+        "type": "dart",
+        "dart-define": "FLAVOR=PROD"
+      },
+      
+     
+    ]
+  }

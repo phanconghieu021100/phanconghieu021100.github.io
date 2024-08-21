@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:phanconghieu020100/color_text/color_controller.dart';
 import 'package:phanconghieu020100/fonts/font_controller.dart';
 import 'package:phanconghieu020100/main.dart';
@@ -17,6 +19,10 @@ class SettingController extends GetxController {
   final passengersTitleValue = Rx<String?>(null);
   Rx<String?> agencyStatus = Rx<String?>("SIGNED");
 
+   TextEditingController controller = TextEditingController();
+  final FocusNode focusNode = FocusNode();
+  RxBool isShowIconClose = false.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -26,23 +32,31 @@ class SettingController extends GetxController {
   void init() async {
     setLanguage();
     setThemeMode();
+   controller.addListener(updateCloseIconVisibility);
+  updateCloseIconVisibility();
   }
 
+  void updateCloseIconVisibility() {
+  
+    isShowIconClose.value = controller.text.isNotEmpty;
+ 
+}
+
   void setLanguage() {
-    islanguage.value = prefs.getString('language_code') ?? '';
+    islanguage.value = prefs?.getString('language_code') ?? '';
   }
 
   void updateLanguage(String languageCode) async {
-    await prefs.setString('language_code', languageCode);
+    await prefs?.setString('language_code', languageCode);
     islanguage.value = languageCode;
   }
 
   void setThemeMode() {
-    isThemeMode.value = prefs.getString('theme_mode') ?? '';
+    isThemeMode.value = prefs?.getString('theme_mode') ?? '';
   }
 
   void updateThemeMode(String themeMode) async {
-    await prefs.setString('theme_mode', themeMode);
+    await prefs?.setString('theme_mode', themeMode);
     isThemeMode.value = themeMode;
   }
 }

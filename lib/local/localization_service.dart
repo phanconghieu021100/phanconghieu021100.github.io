@@ -46,6 +46,7 @@ class LocalizationService {
 final ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
   primarySwatch: Colors.blue,
+  scaffoldBackgroundColor: Colors.white
   // Các cấu hình khác cho light theme
 );
 

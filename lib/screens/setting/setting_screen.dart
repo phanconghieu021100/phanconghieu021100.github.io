@@ -10,6 +10,7 @@ import 'package:phanconghieu020100/utils/colors.dart';
 import 'package:phanconghieu020100/utils/common_buttonsheet.dart';
 import 'package:phanconghieu020100/utils/drop_down.dart';
 import 'package:phanconghieu020100/utils/example_drop_down/data_demo.dart';
+import 'package:phanconghieu020100/utils/searchdropdown.dart';
 import 'package:phanconghieu020100/utils/title_close.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -653,16 +654,8 @@ class _SettingScreenState extends State<SettingScreen> {
                         ),
                       ),
                     ),
-                    ElevatedButton(
-                        onPressed: () {
-                          controller.colorController.changeColor(Colors.blue);
-                        },
-                        child: Text('blue')),
-                    ElevatedButton(
-                      onPressed: () {
-                        controller.colorController.changeColor(Colors.red);
-                      },
-                      child: Text('đỏ'),
+                    SizedBox(
+                      height: 20.h,
                     ),
                     ElevatedButton(
                         onPressed: () {
@@ -675,94 +668,42 @@ class _SettingScreenState extends State<SettingScreen> {
                       },
                       child: Text('đỏ'),
                     ),
-                    ElevatedButton(
-                        onPressed: () {
-                          controller.colorController.changeColor(Colors.blue);
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 15.w),
+                      child: SearchDropdown2<String>(
+                        hintText: 'Search',
+                        itemBuilder: (context, suggestion) {
+                          return ListTile(
+                            title: Text(suggestion,style: controller.fontController.currentFontStyle,),
+                          );
                         },
-                        child: Text('blue')),
-                    ElevatedButton(
-                      onPressed: () {
-                        controller.colorController.changeColor(Colors.red);
-                      },
-                      child: Text('đỏ'),
-                    ),
-                    ElevatedButton(
-                        onPressed: () {
-                          controller.colorController.changeColor(Colors.blue);
+                        suggestions: (query) async {
+                          final allSuggestions = [
+                            'Apple',
+                            'Banana',
+                            'Cherry',
+                            'Date',
+                            'Fig',
+                            'Grape'
+                          ];
+                          return allSuggestions.where((item) =>
+                              item.toLowerCase().contains(query.toLowerCase()));
                         },
-                        child: Text('blue')),
-                    ElevatedButton(
-                      onPressed: () {
-                        controller.colorController.changeColor(Colors.red);
-                      },
-                      child: Text('đỏ'),
-                    ),
-                    ElevatedButton(
-                        onPressed: () {
-                          controller.colorController.changeColor(Colors.blue);
+                        onTapSuggestion: (selected) {
+                          print('Selected: $selected');
+                          controller.controller.text = selected;
+
+                          controller.updateCloseIconVisibility();
                         },
-                        child: Text('blue')),
-                    ElevatedButton(
-                      onPressed: () {
-                        controller.colorController.changeColor(Colors.red);
-                      },
-                      child: Text('đỏ'),
+                        focusNode: controller.focusNode,
+                        controller: controller.controller,
+                        isShowIconClose: controller.isShowIconClose.value,
+                      ),
                     ),
-                    ElevatedButton(
-                        onPressed: () {
-                          controller.colorController.changeColor(Colors.blue);
-                        },
-                        child: Text('blue')),
-                    ElevatedButton(
-                      onPressed: () {
-                        controller.colorController.changeColor(Colors.red);
-                      },
-                      child: Text('đỏ'),
-                    ),
-                    ElevatedButton(
-                        onPressed: () {
-                          controller.colorController.changeColor(Colors.blue);
-                        },
-                        child: Text('blue')),
-                    ElevatedButton(
-                      onPressed: () {
-                        controller.colorController.changeColor(Colors.red);
-                      },
-                      child: Text('đỏ'),
-                    ),
-                    ElevatedButton(
-                        onPressed: () {
-                          controller.colorController.changeColor(Colors.blue);
-                        },
-                        child: Text('blue')),
-                    ElevatedButton(
-                      onPressed: () {
-                        controller.colorController.changeColor(Colors.red);
-                      },
-                      child: Text('đỏ'),
-                    ),
-                    ElevatedButton(
-                        onPressed: () {
-                          controller.colorController.changeColor(Colors.blue);
-                        },
-                        child: Text('blue')),
-                    ElevatedButton(
-                      onPressed: () {
-                        controller.colorController.changeColor(Colors.red);
-                      },
-                      child: Text('đỏ'),
-                    ),
-                    ElevatedButton(
-                        onPressed: () {
-                          controller.colorController.changeColor(Colors.blue);
-                        },
-                        child: Text('blue')),
-                    ElevatedButton(
-                      onPressed: () {
-                        controller.colorController.changeColor(Colors.red);
-                      },
-                      child: Text('đỏ'),
-                    ),
+                    if (controller.focusNode.hasFocus)
+                    SizedBox(
+                      height: 300,
+                    )
                   ],
                 ),
               ),

@@ -18,12 +18,12 @@ class ThemeController extends GetxController {
   void changeTheme(AppTheme themeMode) async {
     _themeMode.value = themeMode;
     
-    await prefs.setString(themeModeKey, themeMode.toString());
+    await prefs?.setString(themeModeKey, themeMode.toString());
   }
 
   void _loadThemeMode() async {
    
-    final savedTheme = prefs.getString(themeModeKey);
+    final savedTheme = prefs?.getString(themeModeKey);
     if (savedTheme != null) {
       _themeMode.value = AppTheme.values.firstWhere(
         (e) => e.toString() == savedTheme,
