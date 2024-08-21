@@ -1,0 +1,45 @@
+-----------------APK--------------------------------------------------------
+
+flutter build apk --dart-define=FLAVOR=DEV
+
+flutter build apk --dart-define=FLAVOR=STAG
+
+flutter build apk --dart-define=FLAVOR=PROD
+
+
+-----------------AAB--------------------------------------------------------
+
+
+flutter build appbundle --dart-define=FLAVOR=DEV
+
+flutter build appbundle --dart-define=FLAVOR=STAG
+
+flutter build appbundle --dart-define=FLAVOR=PROD
+
+------------------WEB--------------------------------------------------------
+
+flutter build web --dart-define=FLAVOR=DEV
+
+flutter build web --dart-define=FLAVOR=STAG
+
+flutter build web --dart-define=FLAVOR=PROD
+
+
+------------------ios--------------------------------------------------------
+
+flutter build ios --dart-define=FLAVOR=DEV
+
+flutter build ios --dart-define=FLAVOR=STAG
+
+flutter build ios --dart-define=FLAVOR=PROD
+
+
+[
+  Đảm bảo rằng bạn đã mở project trong Xcode và đã cấu hình đúng các mục cần thiết.
+Để chạy trên thiết bị hoặc giả lập, bạn có thể sử dụng:
+bash
+
+Copy
+flutter run --dart-define=FLAVOR=DEV
+Đảm bảo rằng bạn đã cài đặt các công cụ cần thiết cho phát triển iOS, như Xcode và CocoaPods.
+]
