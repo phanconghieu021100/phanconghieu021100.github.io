@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BoxContent extends StatelessWidget {
   const BoxContent({super.key, this.content, this.colorContainer});
@@ -11,16 +12,16 @@ class BoxContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80,
-      width: 80,
+      height: 80.h,
+      width: 80.w,
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.shade300),
-          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(8.r),
           color: colorContainer),
       child: Center(
           child: Text(
         content ?? '',
-        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
+        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24.sp),
       )),
     );
   }
