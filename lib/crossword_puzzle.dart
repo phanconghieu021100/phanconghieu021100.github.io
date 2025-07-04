@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:puzzel/box_content.dart';
 import 'package:puzzel/convert.dart';
 
@@ -167,13 +168,22 @@ class _VietnameseCrosswordPuzzleState extends State<VietnameseCrosswordPuzzle> {
                                     context: context,
                                     builder: (context) {
                                       return AlertDialog(
-                                        title: Text('Dòng ${row + 1}'),
+                                        title: Text(
+                                          'Hàng ngang số ${row + 1}',
+                                          style: GoogleFonts.baloo2(
+                                            fontSize: 40.sp,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                         content: Column(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             Text(
                                               '$questionText ($answerLength ký tự)',
-                                              style: TextStyle(fontSize: 20.sp),
+                                              style: GoogleFonts.baloo2(
+                                                fontSize:40.sp,
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                             ),
                                             SizedBox(height: 12.h),
                                             // TextField(
