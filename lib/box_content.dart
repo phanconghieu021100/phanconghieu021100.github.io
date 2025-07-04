@@ -12,8 +12,8 @@ class BoxContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80.h,
-      width: 80.w,
+      height: 70.h,
+      width: 70.w,
       decoration: BoxDecoration(
           border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.circular(8.r),
