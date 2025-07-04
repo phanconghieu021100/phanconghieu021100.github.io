@@ -168,22 +168,39 @@ class _VietnameseCrosswordPuzzleState extends State<VietnameseCrosswordPuzzle> {
                                     context: context,
                                     builder: (context) {
                                       return AlertDialog(
-                                        title: Text(
-                                          'Hàng ngang số ${row + 1}',
-                                          style: GoogleFonts.baloo2(
-                                            fontSize: 40.sp,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                        title: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'Hàng ngang số ${row + 1}'.toUpperCase(),
+                                              style: GoogleFonts.baloo2(
+                                                fontSize: 40.sp,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                         content: Column(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            Text(
-                                              '$questionText ($answerLength ký tự)',
-                                              style: GoogleFonts.baloo2(
-                                                fontSize:40.sp,
-                                                fontWeight: FontWeight.w500,
-                                              ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  questionText,
+                                                  style: GoogleFonts.baloo2(
+                                                    fontSize:40.sp,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  ' ($answerLength ký tự)',
+                                                  style: GoogleFonts.baloo2(
+                                                    fontSize:40.sp,
+                                                    color: Colors.red,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                             SizedBox(height: 12.h),
                                             // TextField(

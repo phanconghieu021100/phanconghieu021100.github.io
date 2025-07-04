@@ -6,11 +6,8 @@ bool shouldHideCell(int row, int col) {
     0: {0, 1, 2, 9},
     1: {0, 5, 6, 7, 8, 9},
     2: {0, 1, 2, 9},
-    3: {0, 1, 8, 9},
-    4: {
-      0,
-      1,
-    },
+    3: {4,5,6,7,8,9},
+    4: {0,1},
     5: {0, 1, 2, 7, 8, 9},
     6: {0, 4, 5, 6, 7, 8, 9},
     7: {0, 1, 8, 9},
@@ -25,7 +22,7 @@ final Map<int, String> answers = {
   0: 'AGENCY',
   1: 'VOID',
   2: 'REMARK',
-  3: 'ADDPAX',
+  3: 'HOLD',
   4: 'DANHSACH',
   5: 'TACH',
   6: 'VNA',
@@ -100,12 +97,10 @@ String getContent(int row, int col) {
   //dòng 3
   if (row == 3) {
     const agencyLetters = [
-      'A',
+      'H',
+      'O',
+      'L',
       'D',
-      'D',
-      'P',
-      'A',
-      'X',
     ];
 
     // Danh sách các cột KHÔNG ẩn trong dòng 0
