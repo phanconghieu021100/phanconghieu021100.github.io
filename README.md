@@ -1,21 +1,27 @@
-<<<<<<< HEAD
-# puzzel
+#!/bin/bash
 
-A new Flutter project.
+echo "🔄 Checkout code branch"
+git checkout feature/code_game || exit
 
-## Getting Started
+echo "🛠 Building web..."
+flutter build web || exit
 
-This project is a starting point for a Flutter application.
+echo "📁 Copying build to temp"
+mkdir -p ~/web_temp
+cp -r build/web/* ~/web_temp/
 
-A few resources to get you started if this is your first Flutter project:
+echo "🚀 Switching to main"
+git checkout main || exit
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+echo "🧹 Cleaning main branch"
+find . -maxdepth 1 ! -name '.' ! -name '.git' -exec rm -rf {} +
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# phanconghieu021100.github.io
-=======
->>>>>>> af6d0c307bb4e9d4d25528363aa67bde91e3664d
-# phanconghieu021100.github.io
+echo "📥 Copying web build into main"
+cp -r ~/web_temp/* ./
+
+echo "📦 Committing and pushing"
+git add .
+git commit -m "Deploy web from feature/code_game"
+git push --force origin main
+
+echo "✅ Done!"
