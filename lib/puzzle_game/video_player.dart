@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:puzzel/rule_game.dart';
+import 'package:puzzel/puzzle_game/rule_game.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerFromAsset extends StatefulWidget {

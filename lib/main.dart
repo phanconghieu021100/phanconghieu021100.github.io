@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:puzzel/crossword_puzzle.dart';
-import 'package:puzzel/video_player.dart';
+import 'package:puzzel/puzzle_game/crossword_puzzle.dart';
+import 'package:puzzel/puzzle_game/video_player.dart';
 // import 'package:puzzel/video_player.dart';
 
 void main() {

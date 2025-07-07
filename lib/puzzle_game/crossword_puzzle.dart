@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:puzzel/box_content.dart';
-import 'package:puzzel/convert.dart';
+import 'package:puzzel/puzzle_game/box_content.dart';
+import 'package:puzzel/puzzle_game/convert_puzzle.dart';
 
 class VietnameseCrosswordPuzzle extends StatefulWidget {
   const VietnameseCrosswordPuzzle({super.key});
