@@ -2,10 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:puzzel/english_transfer/sentence_game_page.dart';
-import 'package:puzzel/puzzle_game/crossword_puzzle.dart';
-import 'package:puzzel/puzzle_game/video_player.dart';
-// import 'package:puzzel/video_player.dart';
+import 'package:puzzel/english_transfer/topic_selection_page.dart';
 
 void main() {
   runApp(VietnameseCrosswordApp());
@@ -28,7 +25,7 @@ class VietnameseCrosswordApp extends StatelessWidget {
             primarySwatch: Colors.blue,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          home: SentenceGamePage(),
+          home: TopicSelectionPage(),
         );
       },
     );

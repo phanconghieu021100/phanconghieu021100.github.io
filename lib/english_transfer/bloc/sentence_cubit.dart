@@ -3,13 +3,14 @@
 import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:puzzel/english_transfer/content_deepseek_app.dart';
-import 'package:puzzel/english_transfer/sentence_state.dart';
+import 'package:puzzel/english_transfer/bloc/sentence_state.dart';
 
 class SentenceCubit extends Cubit<SentenceState> {
+  final SentenceSet sentenceSet;
   final Map<int, List<String>> _selectedWordMap = {};
   final Map<int, List<String>> _shuffledWordMap = {};
 
-  SentenceCubit()
+  SentenceCubit(this.sentenceSet)
       : super(SentenceState(
           currentIndex: 0,
           selectedWords: [],
@@ -26,7 +27,7 @@ class SentenceCubit extends Cubit<SentenceState> {
     if (_shuffledWordMap.containsKey(index)) {
       shuffled = List<String>.from(_shuffledWordMap[index]!);
     } else {
-      final words = englishSentences[index].split(' ');
+      final words = sentenceSet.englishSentences[index].split(' ');
       words.shuffle(Random());
       words.removeWhere((w) => selected.contains(w));
       shuffled = List<String>.from(words);
@@ -62,13 +63,13 @@ class SentenceCubit extends Cubit<SentenceState> {
 
   void checkAnswer(
       Function onCorrect, Function onIncorrect, Function onComplete) {
-    final correct = englishSentences[state.currentIndex];
+    final correct = sentenceSet.englishSentences[state.currentIndex];
     final attempt = state.selectedWords.join(' ');
 
     if (attempt == correct) {
       onCorrect();
       Future.delayed(const Duration(milliseconds: 800), () {
-        if (state.currentIndex < englishSentences.length - 1) {
+        if (state.currentIndex < sentenceSet.englishSentences.length - 1) {
           next();
         } else {
           onComplete();
@@ -80,7 +81,7 @@ class SentenceCubit extends Cubit<SentenceState> {
   }
 
   void next() {
-    if (state.currentIndex < englishSentences.length - 1) {
+    if (state.currentIndex < sentenceSet.englishSentences.length - 1) {
       emit(state.copyWith(currentIndex: state.currentIndex + 1));
       loadCurrentSentence();
     }
