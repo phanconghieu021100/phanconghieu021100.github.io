@@ -1,3 +1,13 @@
+const List<SentenceSet> allSentenceSets = [
+  deepSeekSet,
+  techSet,
+  memoriesSet,
+  mostDifficultLanguageSet,
+  idiomsSet,
+  pursuitOfHappynessSet,
+  richnessSet
+];
+
 class SentenceSet {
   final String title;
   final List<String> englishSentences;
@@ -50,4 +60,109 @@ const SentenceSet techSet = SentenceSet(
   ],
 );
 
-const List<SentenceSet> allSentenceSets = [deepSeekSet, techSet];
+const SentenceSet pursuitOfHappynessSet =
+    SentenceSet(title: "Pursuit of Happyness", englishSentences: [
+  "The Pursuit of Happyness is a powerful theme that highlights the struggles and triumphs of achieving goals.",
+  "Inspired by the true story of Chris Gardner, this journey showcases how determination, hard work, and perseverance can overcome adversity.",
+  "Chris Gardner faced homelessness, financial struggles, and career challenges, but he never gave up.",
+  "Through his unwavering spirit, he became a successful stockbroker and a symbol of hope.",
+  "The phrase 'pursuit of happyness' implies that happiness is not given, but achieved through effort.",
+  "It teaches that success is not measured by money, but by one's ability to overcome challenges.",
+  "True richness is not just how much money one has, but also the quality of life, health, relationships, and personal fulfillment.",
+  "Some people measure richness by their possessions, while others consider richness as having meaningful experiences and deep connections.",
+  "Healthy friendships and family bonds often bring more joy than material wealth.",
+  "Achieving a balance between financial stability and emotional well-being can lead to a fulfilling life.",
+  "The richest people are often those who appreciate life, share with others, and find contentment in the present moment."
+], vietnameseSentences: [
+  "Mưu cầu hạnh phúc là một chủ đề mạnh mẽ nhấn mạnh những khó khăn và chiến thắng trong việc đạt được mục tiêu.",
+  "Lấy cảm hứng từ câu chuyện có thật của Chris Gardner, hành trình này cho thấy sự quyết tâm, làm việc chăm chỉ và kiên trì có thể vượt qua nghịch cảnh.",
+  "Chris Gardner đã đối mặt với tình trạng vô gia cư, khó khăn tài chính và thách thức nghề nghiệp, nhưng ông không bao giờ bỏ cuộc.",
+  "Nhờ vào tinh thần kiên định của mình, ông đã trở thành một nhà môi giới chứng khoán thành công và là biểu tượng của hy vọng.",
+  "Cụm từ 'mưu cầu hạnh phúc' ngụ ý rằng hạnh phúc không tự nhiên có mà phải đạt được bằng sự nỗ lực.",
+  "Nó dạy rằng thành công không được đo lường bằng tiền bạc, mà bởi khả năng vượt qua thử thách.",
+  "Sự giàu có thực sự không chỉ là số tiền một người sở hữu, mà còn là chất lượng cuộc sống, sức khỏe, các mối quan hệ và sự mãn nguyện cá nhân.",
+  "Một số người đánh giá sự giàu có bằng tài sản họ sở hữu, trong khi những người khác coi sự giàu có là có những trải nghiệm ý nghĩa và các mối quan hệ sâu sắc.",
+  "Tình bạn lành mạnh và sự gắn kết gia đình thường mang lại niềm vui hơn là sự giàu có vật chất.",
+  "Đạt được sự cân bằng giữa sự ổn định tài chính và sức khỏe tinh thần có thể mang lại một cuộc sống viên mãn.",
+  "Những người giàu có nhất thường là những người biết trân trọng cuộc sống, chia sẻ với người khác và tìm thấy sự hài lòng trong hiện tại."
+]);
+
+const SentenceSet memoriesSet = SentenceSet(
+  title: "Memories are important",
+  englishSentences: [
+    "Memories are important because they shape our identity.",
+    "They help us learn from the past, create emotional connections, and build relationships.",
+    "Special moments with family and friends form a lifelong bond.",
+    "Memories of success motivate us, while lessons from failures make us wiser.",
+    "They preserve cultural history and help us understand our roots.",
+    "Without memories, we would lose a sense of self and purpose.",
+    "Memories are the stories that bring meaning and joy to our lives."
+  ],
+  vietnameseSentences: [
+    "Ký ức rất quan trọng vì chúng hình thành nên bản sắc của chúng ta.",
+    "Chúng giúp chúng ta học từ quá khứ, tạo nên những kết nối cảm xúc, và xây dựng các mối quan hệ.",
+    "Những khoảnh khắc đặc biệt với gia đình và bạn bè tạo nên sự gắn kết suốt đời.",
+    "Ký ức về thành công truyền động lực cho chúng ta, còn bài học từ thất bại giúp chúng ta khôn ngoan hơn.",
+    "Chúng lưu giữ lịch sử văn hóa và giúp chúng ta hiểu về nguồn cội.",
+    "Nếu không có ký ức, chúng ta sẽ mất đi cảm giác về bản thân và mục đích.",
+    "Ký ức là những câu chuyện mang lại ý nghĩa và niềm vui cho cuộc sống chúng ta."
+  ],
+);
+
+const SentenceSet mostDifficultLanguageSet = SentenceSet(
+  title: "The most difficult language",
+  englishSentences: [
+    "The most difficult language in the world depends on various factors, such as grammar, pronunciation, and script.",
+    "Mandarin Chinese is often considered the toughest due to its complex tonal system and thousands of characters.",
+    "Arabic is difficult because of its unique script, complex grammar, and words that change form based on context.",
+    "Japanese has three writing systems: Kanji, Hiragana and Katakana, making it difficult to master.",
+    "Russian has complex grammatical cases, while Hungarian has 18 grammatical cases.",
+    "Though some languages are more complex, the difficulty depends on a person's native language."
+  ],
+  vietnameseSentences: [
+    "Ngôn ngữ khó nhất thế giới phụ thuộc vào nhiều yếu tố, như ngữ pháp, phát âm và chữ viết.",
+    "Tiếng Trung Quan thoại thường được coi là khó nhất vì hệ thống thanh điệu phức tạp và hàng nghìn ký tự.",
+    "Tiếng Ả Rập khó vì hệ chữ viết độc đáo, ngữ pháp phức tạp, và từ ngữ thay đổi hình thức tùy theo ngữ cảnh.",
+    "Tiếng Nhật có ba hệ chữ viết: Kanji, Hiragana và Katakana, khiến nó khó để thành thạo.",
+    "Tiếng Nga có các dạng ngữ pháp phức tạp, trong khi tiếng Hungary có 18 cách chia từ.",
+    "Dù một số ngôn ngữ phức tạp hơn, độ khó còn phụ thuộc vào ngôn ngữ mẹ đẻ của mỗi người."
+  ],
+);
+
+const SentenceSet idiomsSet = SentenceSet(
+  title: "Idioms",
+  englishSentences: [
+    "Idioms are common phrases or expressions whose meaning can's be literally interpreted.",
+    "They often convey deeper meanings and add color to language.",
+    "Examples include 'break a leg', 'hit the nail on the head', and 'between a rock and a hard place'.",
+    "Each language has its own idioms, and they often reflect cultural history and common life experiences.",
+    "Learning idioms can help improve language fluency and make conversations more natural."
+  ],
+  vietnameseSentences: [
+    "Thành ngữ là những cụm từ hoặc cách diễn đạt phổ biến mà không thể hiểu theo nghĩa đen.",
+    "Chúng thường truyền tải ý nghĩa sâu sắc hơn và làm cho ngôn ngữ sinh động hơn.",
+    "Ví dụ bao gồm 'break a leg' (chúc may mắn), 'hit the nail on the head' (nói đúng trọng tâm), và 'between a rock and a hard place' (ở trong tình thế khó khăn).",
+    "Mỗi ngôn ngữ đều có thành ngữ riêng, và chúng thường phản ánh lịch sử văn hóa cùng những trải nghiệm cuộc sống.",
+    "Học thành ngữ có thể giúp nâng cao khả năng ngôn ngữ và làm cho cuộc hội thoại tự nhiên hơn."
+  ],
+);
+
+const SentenceSet richnessSet = SentenceSet(
+  title: "Richness",
+  englishSentences: [
+    "Richness is often associated with financial wealth, but it encompasses much more.",
+    "True richness is not just how much money one has, but also the quality of life, health, relationships, and personal fulfillment.",
+    "Some people measure richness by their possessions, while others consider richness as having meaningful experiences and deep connections.",
+    "Healthy friendships and family bonds often bring more joy than material wealth.",
+    "Achieving a balance between financial stability and emotional well-being can lead to a fulfilling life.",
+    "The richest people are often those who appreciate life, share with others, and find contentment in the present moment."
+  ],
+  vietnameseSentences: [
+    "Sự giàu có thường gắn liền với sự giàu về tài chính, nhưng nó bao hàm nhiều khía cạnh hơn thế.",
+    "Sự giàu có thực sự không chỉ là số tiền một người sở hữu, mà còn là chất lượng cuộc sống, sức khỏe, các mối quan hệ và sự mãn nguyện cá nhân.",
+    "Một số người đánh giá sự giàu có bằng tài sản họ sở hữu, trong khi những người khác coi sự giàu có là có những trải nghiệm ý nghĩa và các mối quan hệ sâu sắc.",
+    "Tình bạn lành mạnh và sự gắn kết gia đình thường mang lại niềm vui hơn là sự giàu có vật chất.",
+    "Đạt được sự cân bằng giữa sự ổn định tài chính và sức khỏe tinh thần có thể mang lại một cuộc sống viên mãn.",
+    "Những người giàu có nhất thường là những người biết trân trọng cuộc sống, chia sẻ với người khác và tìm thấy sự hài lòng trong hiện tại."
+  ],
+);
