@@ -1,3 +1,5 @@
+bash deploy_web.sh
+
 # restaurant_with_frog_api
 
 A new Flutter project.
