@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "🔄 Checkout code branch"
-git checkout feature/code || exit
+git checkout restaurant || exit
 
 echo "🛠 Building web..."
 flutter build web || exit
@@ -21,7 +21,7 @@ cp -r ~/web_temp/* ./
 
 echo "📦 Committing and pushing"
 git add .
-git commit -m "Deploy web from feature/code"
+git commit -m "Deploy web from restaurant"
 git push --force origin main
 
 echo "✅ Done!"
