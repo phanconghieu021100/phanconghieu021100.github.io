@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:restaurant_with_frog_api/model/dish.dart';
+
 class DishService {
-  static const baseUrl = 'https://restaurant-yz31.onrender.com';
+  // static const baseUrl = 'https://restaurant-yz31.onrender.com';
+  static const baseUrl = 'http://localhost:8080';
 
   static Future<List<Dish>> fetchAllDishes() async {
     final response = await http.get(Uri.parse('$baseUrl/dishes'));
@@ -11,9 +13,23 @@ class DishService {
     return list.map((e) => Dish.fromJson(e)).toList();
   }
 
-  static Future<List<Dish>> searchDishes(String name) async {
-    final response = await http.get(Uri.parse('$baseUrl/dishes_search?name=$name'));
+  static Future<List<Dish>> searchDishes(
+    String keyword, {
+    String? sort,
+    bool matchAll = true, // 👈 thêm flag matchAll
+  }) async {
+    final queryParams = {
+      'keyword': keyword,
+      if (sort != null) 'sort': sort,
+      if (matchAll) 'match': 'all', // 👈 thêm nếu matchAll bật
+    };
+
+    final uri = Uri.parse('$baseUrl/dishes_search')
+        .replace(queryParameters: queryParams);
+
+    final response = await http.get(uri);
     final body = jsonDecode(response.body);
+
     final List list = body['results'];
     return list.map((e) => Dish.fromJson(e)).toList();
   }

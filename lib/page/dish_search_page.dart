@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_with_frog_api/model/dish.dart';
+import 'dart:async';
 import 'package:restaurant_with_frog_api/server/dish_service.dart';
 
 class DishSearchPage extends StatefulWidget {
@@ -11,6 +12,8 @@ class _DishSearchPageState extends State<DishSearchPage> {
   List<Dish> results = [];
   final TextEditingController _controller = TextEditingController();
   bool isLoading = false;
+  Timer? _debounce;
+  String? _selectedSort;
 
   @override
   void initState() {
@@ -33,7 +36,7 @@ class _DishSearchPageState extends State<DishSearchPage> {
       return;
     }
     setState(() => isLoading = true);
-    final dishes = await DishService.searchDishes(name);
+    final dishes = await DishService.searchDishes(name, sort: _selectedSort);
     setState(() {
       results = dishes;
       isLoading = false;
@@ -43,6 +46,7 @@ class _DishSearchPageState extends State<DishSearchPage> {
   @override
   void dispose() {
     _controller.dispose();
+    _debounce?.cancel();
     super.dispose();
   }
 
@@ -56,13 +60,32 @@ class _DishSearchPageState extends State<DishSearchPage> {
             padding: const EdgeInsets.all(12.0),
             child: TextField(
               controller: _controller,
-              onChanged: searchDishes,
+              onChanged: (value) {
+                if (_debounce?.isActive ?? false) _debounce?.cancel();
+
+                _debounce = Timer(Duration(seconds: 1), () {
+                  searchDishes(value);
+                });
+              },
               decoration: InputDecoration(
                 labelText: 'Tìm kiếm món ăn',
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(),
               ),
             ),
+          ),
+          DropdownButton<String>(
+            value: _selectedSort,
+            hint: Text('Sắp xếp theo'),
+            items: [
+              DropdownMenuItem(value: 'price_asc', child: Text('Giá tăng dần')),
+              DropdownMenuItem(
+                  value: 'price_desc', child: Text('Giá giảm dần')),
+            ],
+            onChanged: (value) {
+              setState(() => _selectedSort = value);
+              searchDishes(_controller.text); // hoặc truyền _selectedSort
+            },
           ),
           Expanded(
             child: isLoading
