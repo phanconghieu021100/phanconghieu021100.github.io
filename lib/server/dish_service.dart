@@ -1,16 +1,42 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:restaurant_with_frog_api/base/base_response.dart';
 import 'package:restaurant_with_frog_api/model/dish.dart';
+import 'package:restaurant_with_frog_api/page/paginated_dishes.dart';
 
 class DishService {
   // static const baseUrl = 'https://restaurant-yz31.onrender.com';
   static const baseUrl = 'http://localhost:8080';
 
-  static Future<List<Dish>> fetchAllDishes() async {
-    final response = await http.get(Uri.parse('$baseUrl/dishes'));
-    final body = jsonDecode(response.body);
-    final List list = body['dishes'];
-    return list.map((e) => Dish.fromJson(e)).toList();
+  // static Future<List<Dish>> fetchAllDishes() async {
+  //   final response = await http.get(Uri.parse('$baseUrl/dishes'));
+  //   final body = jsonDecode(response.body);
+  //   final List list = body['dishes'];
+  //   return list.map((e) => Dish.fromJson(e)).toList();
+  // }
+  static Future<PaginatedDishes> fetchAllDishes({
+    int page = 1,
+    String? sort,
+  }) async {
+    // Tạo Map để chứa các query parameters
+    final queryParameters = {
+      'page': page.toString(),
+      if (sort != null) 'sort': sort, // chỉ thêm sort nếu có
+    };
+
+    // Tạo Uri với query parameters
+    final uri =
+        Uri.parse('$baseUrl/dishes').replace(queryParameters: queryParameters);
+
+    final response = await http.get(uri);
+    final Map<String, dynamic> body = jsonDecode(response.body);
+
+    final base = BaseResponse.fromJson(
+      {'data': body}, // 👈 bọc theo đúng format của BaseResponse
+      (data) => PaginatedDishes.fromJson(data),
+    );
+
+    return base.data;
   }
 
   static Future<List<Dish>> searchDishes(
