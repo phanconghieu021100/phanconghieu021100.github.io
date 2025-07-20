@@ -22,6 +22,12 @@ class TableEditorPage extends StatelessWidget {
                 icon: Icon(Icons.delete),
                 onPressed: () => ctx.read<TableCubit>().clearAll(),
               );
+            }),
+            Builder(builder: (ctx) {
+              return IconButton(
+                  icon: Icon(Icons.view_week),
+                  onPressed: () =>
+                      ctx.read<TableCubit>().logAllTablePositions());
             })
           ],
         ),

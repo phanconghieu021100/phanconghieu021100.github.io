@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant_with_frog_api/page/table/bloc/table_cubit.dart';
@@ -15,7 +14,10 @@ class CanvasArea extends StatelessWidget {
             return Positioned(
               left: table.position.dx,
               top: table.position.dy,
-              child: DraggableTableItem(table: table),
+              child: DraggableTableItem(
+                table: table,
+                isSelected: state.selectedTableIds.contains(table.id),
+              ),
             );
           }).toList(),
         );
