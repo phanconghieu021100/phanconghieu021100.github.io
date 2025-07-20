@@ -6,28 +6,48 @@ import 'package:restaurant_with_frog_api/page/table/bloc/table_cubit.dart';
 import 'package:restaurant_with_frog_api/page/table/widget/canvas_area.dart';
 import 'package:uuid/uuid.dart';
 
-class TableEditorPage extends StatelessWidget {
+class TableEditorPage extends StatefulWidget {
   const TableEditorPage({super.key});
 
   @override
+  State<TableEditorPage> createState() => _TableEditorPageState();
+}
+
+class _TableEditorPageState extends State<TableEditorPage> {
+  late final TableCubit _cubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _cubit = TableCubit();
+    _cubit.loadTablesFromServer(); // 👈 Gọi API khi mở trang
+  }
+
+  @override
+  void dispose() {
+    _cubit.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => TableCubit(),
+    return BlocProvider.value(
+      value: _cubit,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Thiết kế sơ đồ bàn'),
+          title: const Text('Thiết kế sơ đồ bàn'),
           actions: [
             Builder(builder: (ctx) {
               return IconButton(
-                icon: Icon(Icons.delete),
+                icon: const Icon(Icons.delete),
                 onPressed: () => ctx.read<TableCubit>().clearAll(),
               );
             }),
             Builder(builder: (ctx) {
               return IconButton(
-                  icon: Icon(Icons.view_week),
+                  icon: const Icon(Icons.view_week),
                   onPressed: () =>
-                      ctx.read<TableCubit>().logAllTablePositions());
+                      ctx.read<TableCubit>().saveAllTablesToServer());
             })
           ],
         ),
@@ -42,21 +62,21 @@ class TableEditorPage extends StatelessWidget {
                   Builder(
                     builder: (ctx) => ElevatedButton(
                       onPressed: () => _addTable(ctx, 'round'),
-                      child: Text('Bàn tròn'),
+                      child: const Text('Bàn tròn'),
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Builder(
                     builder: (ctx) => ElevatedButton(
                       onPressed: () => _addTable(ctx, 'square'),
-                      child: Text('Bàn vuông'),
+                      child: const Text('Bàn vuông'),
                     ),
                   ),
                   Builder(builder: (ctx) {
                     return ElevatedButton(
                       onPressed: () =>
                           ctx.read<TableCubit>().groupSelectedTables(),
-                      child: Text("Gộp bàn"),
+                      child: const Text("Gộp bàn"),
                     );
                   }),
                 ],
@@ -71,8 +91,8 @@ class TableEditorPage extends StatelessWidget {
   void _addTable(BuildContext context, String type) {
     final table = TableItem(
       id: const Uuid().v4(),
-      position: Offset(100, 100),
-      size: Size(80, 80),
+      position: const Offset(100, 100),
+      size: const Size(80, 80),
       type: type,
     );
     context.read<TableCubit>().addTable(table);

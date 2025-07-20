@@ -2,18 +2,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:restaurant_with_frog_api/base/base_response.dart';
 import 'package:restaurant_with_frog_api/model/dish.dart';
+import 'package:restaurant_with_frog_api/model/tableitem.dart';
 import 'package:restaurant_with_frog_api/page/dishes/paginated_dishes.dart';
 
-class DishService {
+class RestaurantService {
   static const baseUrl = 'https://restaurant-yz31.onrender.com';
   // static const baseUrl = 'http://localhost:8080';
 
-  // static Future<List<Dish>> fetchAllDishes() async {
-  //   final response = await http.get(Uri.parse('$baseUrl/dishes'));
-  //   final body = jsonDecode(response.body);
-  //   final List list = body['dishes'];
-  //   return list.map((e) => Dish.fromJson(e)).toList();
-  // }
   static Future<PaginatedDishes> fetchAllDishes({
     int page = 1,
     String? sort,
@@ -86,5 +81,43 @@ class DishService {
 
   static Future<void> deleteDish(String id) async {
     await http.delete(Uri.parse('$baseUrl/dishes/$id'));
+  }
+
+  /// GET /tables - Lấy danh sách tất cả bàn
+  static Future<List<TableItem>> fetchAllTables() async {
+    final response = await http.get(Uri.parse('$baseUrl/tables'));
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body)['results'] as List;
+      return data.map((e) => TableItem.fromJson(e)).toList();
+    } else {
+      throw Exception('Lỗi khi load danh sách bàn');
+    }
+  }
+
+  /// POST /tables - Lưu hoặc cập nhật 1 bàn
+  static Future<void> saveSingleTable(TableItem table) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/tables'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(table.toJson()),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Lỗi khi lưu bàn');
+    }
+  }
+
+  /// POST /tables/save-all - Lưu toàn bộ danh sách bàn
+  static Future<void> saveAllTables(List<TableItem> tables) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/tables/save_all'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(tables.map((e) => e.toJson()).toList()),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Lỗi khi lưu danh sách bàn');
+    }
   }
 }

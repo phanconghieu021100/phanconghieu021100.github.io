@@ -18,6 +18,28 @@ class TableItem {
       this.isSelected = false,
       this.groupColor});
 
+  factory TableItem.fromJson(Map<String, dynamic> json) {
+    return TableItem(
+      id: json['id'],
+      type: json['type'],
+      position: Offset(json['position']['dx'], json['position']['dy']),
+      size: Size(json['size']['width'], json['size']['height']),
+      groupId: json['groupId'],
+      groupColor: json['groupColor'] != null ? Color(json['groupColor']) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'type': type,
+      'position': {'dx': position.dx, 'dy': position.dy},
+      'size': {'width': size.width, 'height': size.height},
+      'groupId': groupId,
+      'groupColor': groupColor?.value,
+    };
+  }
+
   TableItem copyWith(
       {Offset? position,
       Size? size,

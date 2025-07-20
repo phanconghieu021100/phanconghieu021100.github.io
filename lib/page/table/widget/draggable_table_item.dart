@@ -58,7 +58,8 @@ class _DraggableTableItemState extends State<DraggableTableItem> {
         context.read<TableCubit>().updateTable(updated);
       },
       onLongPress: () {
-        print(widget.table.groupId);
+        print(widget.table.groupColor);
+        context.read<TableCubit>().saveTableToServer(widget.table);
       },
       onDoubleTap: () async {
         final groupId = widget.table.groupId;

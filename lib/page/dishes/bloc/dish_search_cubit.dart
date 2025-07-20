@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restaurant_with_frog_api/server/dish_service.dart';
+import 'package:restaurant_with_frog_api/server/restaurant_service.dart';
 import 'dish_search_state.dart';
 
 class DishSearchCubit extends Cubit<DishSearchState> {
@@ -12,8 +12,8 @@ class DishSearchCubit extends Cubit<DishSearchState> {
   Future<void> fetchData({int page = 1}) async {
     emit(state.copyWith(isLoading: true, errorMessage: null));
     try {
-      final paginated =
-          await DishService.fetchAllDishes(page: page, sort: state.selectedSort);
+      final paginated = await RestaurantService.fetchAllDishes(
+          page: page, sort: state.selectedSort);
       emit(state.copyWith(
         results: paginated.results,
         currentPage: paginated.currentPage,
@@ -41,7 +41,8 @@ class DishSearchCubit extends Cubit<DishSearchState> {
     _debounce = Timer(const Duration(milliseconds: 500), () async {
       emit(state.copyWith(isLoading: true, errorMessage: null));
       try {
-        final dishes = await DishService.searchDishes(name, sort: state.selectedSort);
+        final dishes = await RestaurantService.searchDishes(name,
+            sort: state.selectedSort);
         emit(state.copyWith(
           results: dishes,
           isLoading: false,

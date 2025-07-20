@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant_with_frog_api/model/tableitem.dart';
+import 'package:restaurant_with_frog_api/server/restaurant_service.dart';
 import 'package:uuid/uuid.dart';
 import 'table_state.dart';
 
@@ -70,6 +71,36 @@ class TableCubit extends Cubit<TableState> {
       print(' - Group: ${t.groupId}');
       print(' - Group Color: ${t.groupColor}');
       print(' - ----');
+    }
+  }
+
+  /// 📥 Tải toàn bộ sơ đồ từ BE
+  Future<void> loadTablesFromServer() async {
+    try {
+      final tables = await RestaurantService.fetchAllTables();
+      emit(state.copyWith(tables: tables));
+    } catch (e) {
+      print('❌ Lỗi khi tải bàn: $e');
+    }
+  }
+
+  /// 💾 Lưu 1 bàn
+  Future<void> saveTableToServer(TableItem table) async {
+    try {
+      await RestaurantService.saveSingleTable(table);
+      print('✅ Đã lưu bàn ${table.id}');
+    } catch (e) {
+      print('❌ Lỗi khi lưu bàn ${table.id}: $e');
+    }
+  }
+
+  /// 💾 Lưu toàn bộ danh sách bàn
+  Future<void> saveAllTablesToServer() async {
+    try {
+      await RestaurantService.saveAllTables(state.tables);
+      print('✅ Đã lưu toàn bộ sơ đồ bàn');
+    } catch (e) {
+      print('❌ Lỗi khi lưu toàn bộ sơ đồ bàn: $e');
     }
   }
 }
