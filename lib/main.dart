@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_with_frog_api/page/dishes/dish_search_page.dart';
+import 'package:restaurant_with_frog_api/page/table/table_editor_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,7 +29,8 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: DishSearchPage(),
+      // body: DishSearchPage(),
+      body: TableEditorPage(),
     );
   }
 }

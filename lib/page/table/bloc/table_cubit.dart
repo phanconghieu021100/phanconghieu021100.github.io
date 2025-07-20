@@ -1,0 +1,26 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:restaurant_with_frog_api/model/tableitem.dart';
+import 'table_state.dart';
+
+class TableCubit extends Cubit<TableState> {
+  TableCubit() : super(TableState.initial());
+
+  void addTable(TableItem table) {
+    emit(state.copyWith(tables: [...state.tables, table]));
+  }
+
+  void removeTable(String id) {
+    emit(state.copyWith(
+        tables: state.tables.where((t) => t.id != id).toList()));
+  }
+
+  void updateTable(TableItem updated) {
+    final newTables = state.tables.map((t) => t.id == updated.id ? updated : t).toList();
+    emit(state.copyWith(tables: newTables));
+  }
+
+  void clearAll() {
+    emit(TableState.initial());
+  }
+}
+
