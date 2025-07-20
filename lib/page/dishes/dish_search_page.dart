@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant_with_frog_api/page/dishes/bloc/dish_search_cubit.dart';
 import 'package:restaurant_with_frog_api/page/dishes/bloc/dish_search_state.dart';
+import 'package:restaurant_with_frog_api/page/dishes/widget/filter_dishes.dart';
+import 'package:restaurant_with_frog_api/page/dishes/widget/search_dishes.dart';
 
 class DishSearchPage extends StatelessWidget {
   @override
@@ -9,7 +11,7 @@ class DishSearchPage extends StatelessWidget {
     return BlocProvider(
       create: (_) => DishSearchCubit()..fetchData(),
       child: Scaffold(
-        appBar: AppBar(title: const Text('Danh sách món ăn')),
+        appBar: AppBar(title: const Text('Danh sách')),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: BlocBuilder<DishSearchCubit, DishSearchState>(
@@ -17,32 +19,9 @@ class DishSearchPage extends StatelessWidget {
               final cubit = context.read<DishSearchCubit>();
               return Column(
                 children: [
-                  TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Tìm món ăn',
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: () {
-                          FocusScope.of(context).unfocus();
-                          cubit.searchDishes('');
-                        },
-                      ),
-                    ),
-                    onChanged: cubit.searchDishes,
-                  ),
+                  SearchDishes(cubit: cubit),
                   const SizedBox(height: 8),
-                  DropdownButton<String>(
-                    value: state.selectedSort,
-                    hint: const Text('Sắp xếp theo'),
-                    isExpanded: true,
-                    items: const [
-                      DropdownMenuItem(
-                          value: 'price_asc', child: Text('Giá tăng dần')),
-                      DropdownMenuItem(
-                          value: 'price_desc', child: Text('Giá giảm dần')),
-                    ],
-                    onChanged: cubit.changeSort,
-                  ),
+                  FilterDishes(cubit: cubit),
                   const SizedBox(height: 8),
                   if (state.errorMessage != null)
                     Text(
@@ -76,12 +55,13 @@ class DishSearchPage extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child:
-                              Text('Trang ${state.currentPage} / ${state.totalPages}'),
+                          child: Text(
+                              'Trang ${state.currentPage} / ${state.totalPages}'),
                         ),
                         TextButton(
-                          onPressed:
-                              state.currentPage < state.totalPages ? cubit.nextPage : null,
+                          onPressed: state.currentPage < state.totalPages
+                              ? cubit.nextPage
+                              : null,
                           child: const Text('Trang sau →'),
                         ),
                       ],
