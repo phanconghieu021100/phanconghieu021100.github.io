@@ -9,6 +9,7 @@ class DishSearchState extends Equatable {
   final String? selectedSort;
   final String? errorMessage;
   final String searchKeyword;
+  final bool hasMore;
 
   const DishSearchState({
     this.results = const [],
@@ -18,6 +19,7 @@ class DishSearchState extends Equatable {
     this.selectedSort,
     this.errorMessage,
     this.searchKeyword = '',
+    this.hasMore = true,
   });
 
   DishSearchState copyWith({
@@ -28,6 +30,7 @@ class DishSearchState extends Equatable {
     String? selectedSort,
     String? errorMessage,
     String? searchKeyword,
+    bool? hasMore,
   }) {
     return DishSearchState(
       results: results ?? this.results,
@@ -37,10 +40,19 @@ class DishSearchState extends Equatable {
       selectedSort: selectedSort ?? this.selectedSort,
       errorMessage: errorMessage,
       searchKeyword: searchKeyword ?? this.searchKeyword,
+      hasMore: hasMore ?? this.hasMore,
     );
   }
 
   @override
-  List<Object?> get props =>
-      [results, isLoading, currentPage, totalPages, selectedSort, errorMessage, searchKeyword];
+  List<Object?> get props => [
+        results,
+        isLoading,
+        currentPage,
+        totalPages,
+        selectedSort,
+        errorMessage,
+        searchKeyword,
+        hasMore
+      ];
 }
