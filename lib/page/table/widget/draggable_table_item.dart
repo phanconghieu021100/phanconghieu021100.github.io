@@ -24,6 +24,9 @@ class _DraggableTableItemState extends State<DraggableTableItem> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: () {
+        context.read<TableCubit>().toggleTableSelection(widget.table.id);
+      },
       onPanUpdate: (details) {
         setState(() => _position += details.delta);
         final updated = widget.table.copyWith(position: _position);
@@ -40,12 +43,14 @@ class _DraggableTableItemState extends State<DraggableTableItem> {
           'width': widget.table.size.width,
           'height': widget.table.size.height
         },
+        'groupId': widget.table.groupId
       }),
       child: Container(
         width: widget.table.size.width,
         height: widget.table.size.height,
         decoration: BoxDecoration(
-          color: Colors.brown[300],
+          color:
+              widget.table.isSelected ? Colors.blueAccent : Colors.brown[300],
           shape: widget.table.type == 'round'
               ? BoxShape.circle
               : BoxShape.rectangle,

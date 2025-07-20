@@ -46,6 +46,13 @@ class TableEditorPage extends StatelessWidget {
                       child: Text('Bàn vuông'),
                     ),
                   ),
+                  Builder(builder: (ctx) {
+                    return ElevatedButton(
+                      onPressed: () =>
+                          ctx.read<TableCubit>().groupSelectedTables(),
+                      child: Text("Gộp bàn"),
+                    );
+                  }),
                 ],
               ),
             ),
