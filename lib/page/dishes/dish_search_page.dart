@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restaurant_with_frog_api/page/bloc/dish_search_cubit.dart';
-import 'package:restaurant_with_frog_api/page/bloc/dish_search_state.dart';
+import 'package:restaurant_with_frog_api/page/dishes/bloc/dish_search_cubit.dart';
+import 'package:restaurant_with_frog_api/page/dishes/bloc/dish_search_state.dart';
 
 class DishSearchPage extends StatelessWidget {
   @override

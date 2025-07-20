@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_with_frog_api/page/dish_search_page.dart';
+import 'package:restaurant_with_frog_api/page/dishes/dish_search_page.dart';
 
 void main() {
   runApp(const MyApp());

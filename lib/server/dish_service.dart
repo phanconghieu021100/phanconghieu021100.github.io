@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:restaurant_with_frog_api/base/base_response.dart';
 import 'package:restaurant_with_frog_api/model/dish.dart';
-import 'package:restaurant_with_frog_api/page/paginated_dishes.dart';
+import 'package:restaurant_with_frog_api/page/dishes/paginated_dishes.dart';
 
 class DishService {
   static const baseUrl = 'https://restaurant-yz31.onrender.com';
