@@ -1,308 +1,77 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:puzzel/puzzle_game/content_game.dart';
 
-bool shouldHideCell(int row, int col) {
-  final Map<int, Set<int>> hiddenCells = {
-    0: {0, 1, 2, 9},
-    1: {0, 5, 6, 7, 8, 9},
-    2: {0, 1, 2, 9},
-    3: {4, 5, 6, 7, 8, 9},
-    4: {0, 1},
-    5: {0, 1, 2, 7, 8, 9},
-    6: {0, 4, 5, 6, 7, 8, 9},
-    7: {0, 1, 8, 9},
-    8: {7, 8, 9},
-    9: {0, 1, 5,6,7,8, 9},
-  };
 
-  return hiddenCells[row]?.contains(col) ?? false;
+
+int colHighlight = computeColHighlight(answers, keyAnswer);
+
+int computeColHighlight(Map<int, String> answers, String keyAnswer) {
+  int maxLeft = 0;
+  int maxRight = 0;
+
+  for (int row = 0; row < keyAnswer.length; row++) {
+    if (!answers.containsKey(row)) continue;
+
+    final word = answers[row]!;
+    final target = keyAnswer[row];
+    final index = word.indexOf(target);
+    if (index == -1) continue;
+
+    // max số chữ bên trái và phải của ký tự target trong word
+    final left = index;
+    final right = word.length - index - 1;
+
+    if (left > maxLeft) maxLeft = left;
+    if (right > maxRight) maxRight = right;
+  }
+
+  return maxLeft; // vị trí cột sẽ là `maxLeft`, vừa đủ chứa bên trái
 }
 
-final Map<int, String> answers = {
-  0: 'AGENCY',
-  1: 'VOID',
-  2: 'REMARK',
-  3: 'HOLD',
-  4: 'DANHSACH',
-  5: 'TACH',
-  6: 'VNA',
-  7: 'HANHLY',
-  8: 'VIETJET',
-  9: 'OSI',
-};
+bool shouldHideCell(int row, int col) {
+  if (!answers.containsKey(row)) return false;
+  if (row >= keyAnswer.length) return true;
 
-String getContent(int row, int col) {
-  if (shouldHideCell(row, col)) return '';
+  final answer = answers[row]!;
+  final targetLetter = keyAnswer[row];
 
-//dòng 0
-  if (row == 0) {
-    const agencyLetters = ['A', 'G', 'E', 'N', 'C', 'Y'];
+  final targetIndex = answer.indexOf(targetLetter);
+  if (targetIndex == -1) return true;
 
-    // Danh sách các cột KHÔNG ẩn trong dòng 0
-    final visibleCols = List.generate(10, (i) => i)
-        .where((c) => !shouldHideCell(0, c))
-        .toList();
+  final startCol = colHighlight - targetIndex;
+  final endCol = startCol + answer.length - 1;
 
-    // Tìm index tương ứng trong agencyLetters
-    final letterIndex = visibleCols.indexOf(col);
-    if (letterIndex >= 0 && letterIndex < agencyLetters.length) {
-      return agencyLetters[letterIndex];
-    }
-    return '';
-  }
-  //dòng 1
-  if (row == 1) {
-    const agencyLetters = [
-      'V',
-      'O',
-      'I',
-      'D',
-    ];
-
-    // Danh sách các cột KHÔNG ẩn trong dòng 0
-    final visibleCols = List.generate(10, (i) => i)
-        .where((c) => !shouldHideCell(1, c))
-        .toList();
-
-    // Tìm index tương ứng trong agencyLetters
-    final letterIndex = visibleCols.indexOf(col);
-    if (letterIndex >= 0 && letterIndex < agencyLetters.length) {
-      return agencyLetters[letterIndex];
-    }
-    return '';
-  }
-  //dòng 2
-  if (row == 2) {
-    const agencyLetters = [
-      'R',
-      'E',
-      'M',
-      'A',
-      'R',
-      'K',
-    ];
-
-    // Danh sách các cột KHÔNG ẩn trong dòng 0
-    final visibleCols = List.generate(10, (i) => i)
-        .where((c) => !shouldHideCell(2, c))
-        .toList();
-
-    // Tìm index tương ứng trong agencyLetters
-    final letterIndex = visibleCols.indexOf(col);
-    if (letterIndex >= 0 && letterIndex < agencyLetters.length) {
-      return agencyLetters[letterIndex];
-    }
-    return '';
-  }
-  //dòng 3
-  if (row == 3) {
-    const agencyLetters = [
-      'H',
-      'O',
-      'L',
-      'D',
-    ];
-
-    // Danh sách các cột KHÔNG ẩn trong dòng 0
-    final visibleCols = List.generate(10, (i) => i)
-        .where((c) => !shouldHideCell(3, c))
-        .toList();
-
-    // Tìm index tương ứng trong agencyLetters
-    final letterIndex = visibleCols.indexOf(col);
-    if (letterIndex >= 0 && letterIndex < agencyLetters.length) {
-      return agencyLetters[letterIndex];
-    }
-    return '';
-  }
-  //dòng 4
-  if (row == 4) {
-    const agencyLetters = [
-      'D',
-      'A',
-      'N',
-      'H',
-      'S',
-      'A',
-      'C',
-      'H',
-    ];
-
-    // Danh sách các cột KHÔNG ẩn trong dòng 0
-    final visibleCols = List.generate(10, (i) => i)
-        .where((c) => !shouldHideCell(4, c))
-        .toList();
-
-    // Tìm index tương ứng trong agencyLetters
-    final letterIndex = visibleCols.indexOf(col);
-    if (letterIndex >= 0 && letterIndex < agencyLetters.length) {
-      return agencyLetters[letterIndex];
-    }
-    return '';
-  }
-  //dòng 5
-  if (row == 5) {
-    const agencyLetters = [
-      'T',
-      'A',
-      'C',
-      'H',
-    ];
-
-    // Danh sách các cột KHÔNG ẩn trong dòng 0
-    final visibleCols = List.generate(10, (i) => i)
-        .where((c) => !shouldHideCell(5, c))
-        .toList();
-
-    // Tìm index tương ứng trong agencyLetters
-    final letterIndex = visibleCols.indexOf(col);
-    if (letterIndex >= 0 && letterIndex < agencyLetters.length) {
-      return agencyLetters[letterIndex];
-    }
-    return '';
-  }
-  //dòng 6
-  if (row == 6) {
-    const agencyLetters = [
-      'V',
-      'N',
-      'A',
-    ];
-
-    // Danh sách các cột KHÔNG ẩn trong dòng 0
-    final visibleCols = List.generate(10, (i) => i)
-        .where((c) => !shouldHideCell(6, c))
-        .toList();
-
-    // Tìm index tương ứng trong agencyLetters
-    final letterIndex = visibleCols.indexOf(col);
-    if (letterIndex >= 0 && letterIndex < agencyLetters.length) {
-      return agencyLetters[letterIndex];
-    }
-    return '';
-  }
-  //dòng 7
-  if (row == 7) {
-    const agencyLetters = [
-      'H',
-      'A',
-      'N',
-      'H',
-      'L',
-      'Y',
-    ];
-
-    // Danh sách các cột KHÔNG ẩn trong dòng 0
-    final visibleCols = List.generate(10, (i) => i)
-        .where((c) => !shouldHideCell(7, c))
-        .toList();
-
-    // Tìm index tương ứng trong agencyLetters
-    final letterIndex = visibleCols.indexOf(col);
-    if (letterIndex >= 0 && letterIndex < agencyLetters.length) {
-      return agencyLetters[letterIndex];
-    }
-    return '';
-  }
-  //dòng 8
-  if (row == 8) {
-    const agencyLetters = [
-      'V',
-      'I',
-      'E',
-      'T',
-      'J',
-      'E',
-      'T',
-    ];
-
-    // Danh sách các cột KHÔNG ẩn trong dòng 0
-    final visibleCols = List.generate(10, (i) => i)
-        .where((c) => !shouldHideCell(8, c))
-        .toList();
-
-    // Tìm index tương ứng trong agencyLetters
-    final letterIndex = visibleCols.indexOf(col);
-    if (letterIndex >= 0 && letterIndex < agencyLetters.length) {
-      return agencyLetters[letterIndex];
-    }
-    return '';
-  }
-  //dòng 9
-  if (row == 9) {
-    const agencyLetters = [
-      'O',
-      'S',
-      'I',
-    ];
-
-    // Danh sách các cột KHÔNG ẩn trong dòng 0
-    final visibleCols = List.generate(10, (i) => i)
-        .where((c) => !shouldHideCell(9, c))
-        .toList();
-
-    // Tìm index tương ứng trong agencyLetters
-    final letterIndex = visibleCols.indexOf(col);
-    if (letterIndex >= 0 && letterIndex < agencyLetters.length) {
-      return agencyLetters[letterIndex];
-    }
-    return '';
-  }
-
-  return '-'; // mặc định cho dòng khác
+  return col < startCol || col > endCol;
 }
 
 Color getCellColor(int row, int col) {
-  // Tô màu xanh lá cho ô đầu tiên có chữ "A" trong dòng 0 (col = 3)
-  if (row == 0 && col == 3) {
-    return colorGreen;
-  }
-  if (row == 1 && col == 3) {
-    return colorGreen;
-  }
-  if (row == 2 && col == 3) {
-    return colorGreen;
-  }
-  if (row == 3 && col == 3) {
-    return colorGreen;
-  }
-  if (row == 4 && col == 3) {
-    return colorGreen;
-  }
-  if (row == 5 && col == 3) {
-    return colorGreen;
-  }
-  if (row == 6 && col == 3) {
-    return colorGreen;
-  }
-  if (row == 7 && col == 3) {
-    return colorGreen;
-  }
-  if (row == 8 && col == 3) {
-    return colorGreen;
-  }
-  if (row == 9 && col == 3) {
+  if (!answers.containsKey(row)) return Colors.white;
+  if (shouldHideCell(row, col)) return Colors.white;
+  if (row >= keyAnswer.length) return Colors.white;
+
+  final answer = answers[row]!;
+  final targetLetter = keyAnswer[row];
+
+  // Tìm vị trí của chữ cần tô màu trong từ
+  final targetIndex = answer.indexOf(targetLetter);
+  if (targetIndex == -1) return Colors.white;
+
+  // Danh sách cột không ẩn (thứ tự ánh xạ vào answer)
+  final visibleCols = List.generate(10, (i) => i)
+      .where((c) => !shouldHideCell(row, c))
+      .toList();
+
+  // Nếu cột hiện tại là nơi chứa ký tự cần tô màu
+  if (targetIndex < visibleCols.length && visibleCols[targetIndex] == col) {
     return colorGreen;
   }
 
-  return Colors.white; // Mặc định
+  return Colors.white;
 }
 
 Color colorGreen = Colors.green.shade300;
 Color colorBrow300 = Colors.brown.shade300;
-
-final Map<String, Map<String, int>> questions = {
-  '0': {'Từ được dùng để chỉ nhóm đối tượng bán vé máy bay trong hệ thống.': 6},
-  '1': {'Thao tác hoàn vé miễn phí trong ngày.': 4},
-  '2': {'Tính năng thêm ghi chú cho code vé hãng VNA': 6},
-  '3': {'Trạng thái giữ chỗ nhưng chưa thanh toán.': 4},
-  '4': {'Giao diện xem toàn bộ các booking đã đặt.': 8},
-  '5': {'Chức năng chia hành khách ra khỏi mã.': 4},
-  '6': {'Hãng hàng không quốc gia Việt Nam.': 3},
-  '7': {'Vật dụng ký gửi theo cân nặng khi đi máy bay.': 6},
-  '8': {'Hãng bay màu đỏ được mệnh danh là delay Airline.': 7},
-  '9': {'Gửi thông tin khách đặc biệt cho hãng.': 3},
-};
 
 Future<void> showFlushBar(BuildContext context,
     {required String content,
@@ -321,4 +90,24 @@ Future<void> showFlushBar(BuildContext context,
     duration: duration ?? Duration(seconds: 3),
   ).show(context);
   onClose?.call();
+}
+
+String getContent(int row, int col) {
+  if (shouldHideCell(row, col)) return '';
+
+  // Kiểm tra nếu row nằm trong answers
+  if (answers.containsKey(row)) {
+    final word = answers[row]!; // Lấy chuỗi tương ứng
+    final visibleCols = List.generate(10, (i) => i)
+        .where((c) => !shouldHideCell(row, c))
+        .toList();
+
+    final letterIndex = visibleCols.indexOf(col);
+    if (letterIndex >= 0 && letterIndex < word.length) {
+      return word[letterIndex];
+    }
+    return '';
+  }
+
+  return '-'; // Mặc định cho các dòng khác
 }
