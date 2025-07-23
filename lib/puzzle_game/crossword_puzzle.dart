@@ -35,249 +35,78 @@ class _VietnameseCrosswordPuzzleState extends State<VietnameseCrosswordPuzzle> {
             decoration: BoxDecoration(),
             child: Stack(
               children: [
-                Image.asset('assets/images/bgim.png'),
+                // Image.asset('assets/images/bgim.png'),
                 // Image.network(
                 //   bgImage,
                 // ),
                 Column(
                   children: [
-                    SizedBox(
-                      height: 120.h,
-                    ),
+                    SizedBox(height: 80.h), // Header space
                     Expanded(
                       child: ListView.builder(
-                        itemCount: answers.length, // 10 dòng
+                        itemCount: answers.length,
                         itemBuilder: (context, row) {
                           return Container(
-                            // margin: EdgeInsets.only(top: 5.h),
-                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            // padding: EdgeInsets.symmetric(
+                            //     vertical: 2.h), // Giảm spacing dòng
                             child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                // ✅ Hiển thị số thứ tự dòng ở đây
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      for (int col = 0; col < 10; col++) {
-                                        final key = '${row}_$col';
-                                        revealedCells.remove(
-                                            key); // 👈 ẩn toàn bộ ô dòng này
-                                      }
-                                    });
-                                  },
-                                  onLongPress: () {
-                                    setState(() {
-                                      for (int col = 0; col < 10; col++) {
-                                        if (!shouldHideCell(row, col)) {
-                                          final key = '${row}_$col';
-                                          revealedCells
-                                              .add(key); // reveal ô này
-                                        }
-                                      }
-                                    });
-                                  },
-                                  child: Container(
-                                    width: 40.w,
-                                    height: 40.h,
-                                    alignment: Alignment.center,
-                                    margin: EdgeInsets.only(
-                                        left: 350.w, right: 100.w, top: 30.h),
-                                    decoration: BoxDecoration(
-                                      color: (row % 2 == 0)
-                                          ? Colors.red
-                                          : Colors.green,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Text(
-                                      '${row + 1}',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                          fontSize: 24.sp),
-                                    ),
-                                  ),
+                                SizedBox(
+                                  width: 200,
                                 ),
 
-                                // ✅ Hiển thị 10 ô trong dòng đó
+                                // 🔢 Số thứ tự dòng
+                                _widgetNumberStt(row),
+                                SizedBox(
+                                  width: 200,
+                                ),
+
+                                // 🔳 Các ô trong dòng đó
                                 Expanded(
-                                  child: Container(
-                                    margin: EdgeInsets.only(top: 10.h),
-                                    child: Wrap(
-                                      spacing: 8.w,
-                                      runSpacing: 6.h,
-                                      children: List.generate(10, (col) {
-                                        if (shouldHideCell(row, col)) {
-                                          return SizedBox(
-                                              width: 70.w, height: 70.h);
-                                        }
+                                  child: Wrap(
+                                    spacing: 8.w,
+                                    runSpacing: 0, // Sát dòng
+                                    children:
+                                        List.generate(answers.length, (col) {
+                                      if (shouldHideCell(row, col)) {
+                                        return SizedBox(
+                                            width: 60.w, height: 60.h);
+                                      }
 
-                                        final key = '${row}_$col';
-                                        final isRevealed =
-                                            revealedCells.contains(key);
-                                        final content = isRevealed
-                                            ? getContent(row, col)
-                                            : '';
+                                      final key = '${row}_$col';
+                                      final isRevealed =
+                                          revealedCells.contains(key);
+                                      final content = isRevealed
+                                          ? getContent(row, col)
+                                          : '';
 
-                                        return GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              if (isRevealed) {
-                                                revealedCells.remove(key);
-                                              } else {
-                                                revealedCells.add(key);
-                                              }
-                                            });
-                                          },
+                                      return GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            if (isRevealed) {
+                                              revealedCells.remove(key);
+                                            } else {
+                                              revealedCells.add(key);
+                                            }
+                                          });
+                                        },
+                                        child: Padding(
+                                          padding:  EdgeInsets.only(top:8.h),
                                           child: BoxContent(
                                             content: content,
                                             colorContainer:
                                                 getCellColor(row, col),
                                           ),
-                                        );
-                                      }),
-                                    ),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    final rowKey = row.toString();
-                                    final questionEntry =
-                                        questionsAndLengthAnswer[rowKey];
-
-                                    if (questionEntry != null) {
-                                      final questionText =
-                                          questionEntry.keys.first;
-                                      final answerLength =
-                                          questionEntry.values.first;
-                                      final TextEditingController _controller =
-                                          TextEditingController();
-
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return AlertDialog(
-                                            title: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  'Hàng ngang số ${row + 1}'
-                                                      .toUpperCase(),
-                                                  style: GoogleFonts.baloo2(
-                                                    fontSize: 40.sp,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            content: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Text(
-                                                      questionText,
-                                                      style: GoogleFonts.baloo2(
-                                                        fontSize: 40.sp,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      ' ($answerLength ký tự)',
-                                                      style: GoogleFonts.baloo2(
-                                                        fontSize: 40.sp,
-                                                        color: Colors.red,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                SizedBox(height: 12.h),
-                                                // TextField(
-                                                //   maxLength: answerLength,
-                                                //   inputFormatters: [
-                                                //     UpperCaseTextFormatter(),
-                                                //     LengthLimitingTextInputFormatter(
-                                                //         answerLength),
-                                                //   ],
-                                                //   controller: _controller,
-                                                //   decoration: const InputDecoration(
-                                                //     hintText: 'Nhập đáp án...',
-                                                //     border: OutlineInputBorder(),
-                                                //   ),
-                                                // ),
-                                              ],
-                                            ),
-                                            actions: [
-                                              // TextButton(
-                                              //   onPressed: () {
-                                              //     final userAnswer = _controller.text
-                                              //         .trim()
-                                              //         .toUpperCase();
-                                              //     final correctAnswer = answers[row];
-
-                                              //     if (userAnswer == correctAnswer) {
-                                              //       setState(() {
-                                              //         for (int col = 0;
-                                              //             col < 10;
-                                              //             col++) {
-                                              //           if (!shouldHideCell(row, col)) {
-                                              //             final key = '${row}_$col';
-                                              //             revealedCells.add(key);
-                                              //           }
-                                              //         }
-                                              //       });
-                                              //       showFlushBar(
-                                              //         context,
-                                              //         content: 'Chính xác',
-                                              //       );
-                                              //       Navigator.pop(context);
-                                              //     } else {
-                                              //       // Hiển thị sai
-
-                                              //       showFlushBar(context,
-                                              //           content: 'Sai đáp án!',
-                                              //           backgroundColor: Colors.red);
-                                              //     }
-                                              //   },
-                                              //   child: const Text('Kiểm tra'),
-                                              // ),
-                                              TextButton(
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                child: const Text('Đóng'),
-                                              ),
-                                            ],
-                                          );
-                                        },
+                                        ),
                                       );
-                                    }
-                                  },
-                                  child: Container(
-                                    width: 50.w,
-                                    height: 50.h,
-                                    alignment: Alignment.center,
-                                    margin: EdgeInsets.only(
-                                        right: 350.w, top: 30.h),
-                                    decoration: BoxDecoration(
-                                      color: (row % 2 == 0)
-                                          ? Colors.red.shade500
-                                          : Colors.green.shade500,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Text(
-                                      '? ${row + 1}',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                          fontSize: 20.sp),
-                                    ),
+                                    }),
                                   ),
                                 ),
+
+                                // ❓ Widget câu hỏi
+                                _widgetQues(row, context),
                               ],
                             ),
                           );
@@ -294,6 +123,178 @@ class _VietnameseCrosswordPuzzleState extends State<VietnameseCrosswordPuzzle> {
             revealedCells: revealedCells,
           )
         ],
+      ),
+    );
+  }
+
+  GestureDetector _widgetNumberStt(int row) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          for (int col = 0; col < answers.length; col++) {
+            revealedCells.remove('${row}_$col');
+          }
+        });
+      },
+      onLongPress: () {
+        setState(() {
+          for (int col = 0; col < answers.length; col++) {
+            if (!shouldHideCell(row, col)) {
+              revealedCells.add('${row}_$col');
+            }
+          }
+        });
+      },
+      child: Container(
+        width: 40.w,
+        height: 40.h,
+        alignment: Alignment.center,
+        margin: EdgeInsets.symmetric(horizontal: 8.w),
+        decoration: BoxDecoration(
+          color: (row % 2 == 0) ? Colors.red : Colors.green,
+          shape: BoxShape.circle,
+        ),
+        child: Text(
+          '${row + 1}',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+            fontSize: 20.sp,
+          ),
+        ),
+      ),
+    );
+  }
+
+  GestureDetector _widgetQues(int row, BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        final rowKey = row.toString();
+        final questionEntry = questionsAndLengthAnswer[rowKey];
+
+        if (questionEntry != null) {
+          final questionText = questionEntry.keys.first;
+          final answerLength = questionEntry.values.first;
+          final TextEditingController _controller = TextEditingController();
+
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Hàng ngang số ${row + 1}'.toUpperCase(),
+                      style: GoogleFonts.baloo2(
+                        fontSize: 40.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          questionText,
+                          style: GoogleFonts.baloo2(
+                            fontSize: 40.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Text(
+                          ' ($answerLength ký tự)',
+                          style: GoogleFonts.baloo2(
+                            fontSize: 40.sp,
+                            color: Colors.red,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 12.h),
+                    // TextField(
+                    //   maxLength: answerLength,
+                    //   inputFormatters: [
+                    //     UpperCaseTextFormatter(),
+                    //     LengthLimitingTextInputFormatter(
+                    //         answerLength),
+                    //   ],
+                    //   controller: _controller,
+                    //   decoration: const InputDecoration(
+                    //     hintText: 'Nhập đáp án...',
+                    //     border: OutlineInputBorder(),
+                    //   ),
+                    // ),
+                  ],
+                ),
+                actions: [
+                  // TextButton(
+                  //   onPressed: () {
+                  //     final userAnswer = _controller.text
+                  //         .trim()
+                  //         .toUpperCase();
+                  //     final correctAnswer = answers[row];
+
+                  //     if (userAnswer == correctAnswer) {
+                  //       setState(() {
+                  //         for (int col = 0;
+                  //             col < 10;
+                  //             col++) {
+                  //           if (!shouldHideCell(row, col)) {
+                  //             final key = '${row}_$col';
+                  //             revealedCells.add(key);
+                  //           }
+                  //         }
+                  //       });
+                  //       showFlushBar(
+                  //         context,
+                  //         content: 'Chính xác',
+                  //       );
+                  //       Navigator.pop(context);
+                  //     } else {
+                  //       // Hiển thị sai
+
+                  //       showFlushBar(context,
+                  //           content: 'Sai đáp án!',
+                  //           backgroundColor: Colors.red);
+                  //     }
+                  //   },
+                  //   child: const Text('Kiểm tra'),
+                  // ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Đóng'),
+                  ),
+                ],
+              );
+            },
+          );
+        }
+      },
+      child: Container(
+        width: 30.w,
+        height: 30.h,
+        alignment: Alignment.center,
+        margin: EdgeInsets.only(
+          right: 350.w,
+        ),
+        decoration: BoxDecoration(
+          color: (row % 2 == 0) ? Colors.red.shade500 : Colors.green.shade500,
+          shape: BoxShape.circle,
+        ),
+        child: Text(
+          '? ${row + 1}',
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              fontSize: 20.sp),
+        ),
       ),
     );
   }

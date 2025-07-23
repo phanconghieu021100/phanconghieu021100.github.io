@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:puzzel/english_transfer/topic_selection_page.dart';
 import 'package:puzzel/puzzle_game/crossword_puzzle.dart';
+import 'package:puzzel/puzzle_game/video_player.dart';
 
 void main() {
   runApp(VietnameseCrosswordApp());
@@ -26,7 +27,7 @@ class VietnameseCrosswordApp extends StatelessWidget {
             primarySwatch: Colors.blue,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          home: VietnameseCrosswordPuzzle(),
+          home: VideoPlayerFromAsset(),
         );
       },
     );

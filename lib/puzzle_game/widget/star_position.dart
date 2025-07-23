@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:puzzel/puzzle_game/content_game.dart';
 import 'package:puzzel/puzzle_game/convert_puzzle.dart';
 
 class StarPosition extends StatefulWidget {
@@ -14,7 +15,7 @@ class StarPosition extends StatefulWidget {
 class _StarPositionState extends State<StarPosition> {
   void revealColumn(int col) {
     setState(() {
-      for (int row = 0; row < 10; row++) {
+      for (int row = 0; row < answers.length; row++) {
         if (!shouldHideCell(row, col)) {
           widget.revealedCells.add('$row\_$col');
         }
@@ -24,7 +25,7 @@ class _StarPositionState extends State<StarPosition> {
 
   void removeColumn(int col) {
     setState(() {
-      for (int row = 0; row < 10; row++) {
+      for (int row = 0; row < answers.length; row++) {
         if (!shouldHideCell(row, col)) {
           widget.revealedCells.remove('$row\_$col');
         }
@@ -35,7 +36,7 @@ class _StarPositionState extends State<StarPosition> {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 50.h,
+      top: 10.h,
       left: 720.w,
       child: GestureDetector(
         onTap: () {

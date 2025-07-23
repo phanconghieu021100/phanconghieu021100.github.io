@@ -39,8 +39,24 @@ class _RuleGameState extends State<RuleGame> {
                     ),
                   );
                 },
-                child:
-                    Image.asset('assets/images/img2.png', fit: BoxFit.cover)))
+                child: Image.asset('assets/images/img2_g2.png',
+                    fit: BoxFit.cover))),
+        floatingActionButton: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => VietnameseCrosswordPuzzle(),
+                  ),
+                );
+              },
+              child: Icon(Icons.arrow_forward_ios_rounded),
+            ),
+          ],
+        )
         // Center(
         //   child: _controller.value.isInitialized
         //       ? AspectRatio(

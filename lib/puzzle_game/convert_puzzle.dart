@@ -2,8 +2,6 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:puzzel/puzzle_game/content_game.dart';
 
-
-
 int colHighlight = computeColHighlight(answers, keyAnswer);
 
 int computeColHighlight(Map<int, String> answers, String keyAnswer) {
@@ -58,7 +56,7 @@ Color getCellColor(int row, int col) {
   if (targetIndex == -1) return Colors.white;
 
   // Danh sách cột không ẩn (thứ tự ánh xạ vào answer)
-  final visibleCols = List.generate(10, (i) => i)
+  final visibleCols = List.generate(14, (i) => i)
       .where((c) => !shouldHideCell(row, c))
       .toList();
 
@@ -98,7 +96,7 @@ String getContent(int row, int col) {
   // Kiểm tra nếu row nằm trong answers
   if (answers.containsKey(row)) {
     final word = answers[row]!; // Lấy chuỗi tương ứng
-    final visibleCols = List.generate(10, (i) => i)
+    final visibleCols = List.generate(answers.length, (i) => i)
         .where((c) => !shouldHideCell(row, c))
         .toList();
 
