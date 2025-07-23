@@ -18,7 +18,7 @@ class BoxContent extends StatelessWidget {
       height: 60.h,
       width: 60.w,
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
+          border: Border.all(color: Colors.black),
           borderRadius: BorderRadius.circular(8.r),
           color: colorContainer),
       child: Center(

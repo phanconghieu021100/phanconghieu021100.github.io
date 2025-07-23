@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:puzzel/puzzle_game/rule_game.dart';
 import 'package:video_player/video_player.dart';
 
@@ -10,13 +9,14 @@ class VideoPlayerFromAsset extends StatefulWidget {
 
 class _VideoPlayerFromAssetState extends State<VideoPlayerFromAsset> {
   late VideoPlayerController _controller;
+  bool hasPlayedOnce = false;
 
   @override
   void initState() {
     super.initState();
     _controller = VideoPlayerController.asset('assets/images/gif_g2.mp4')
       ..initialize().then((_) {
-        setState(() {}); // Cập nhật UI khi video đã sẵn sàng
+        setState(() {}); // Cập nhật UI khi video sẵn sàng
       });
   }
 
@@ -24,6 +24,22 @@ class _VideoPlayerFromAssetState extends State<VideoPlayerFromAsset> {
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  void handleButtonPress() {
+    if (!hasPlayedOnce) {
+      // 🔁 Lần đầu tiên nhấn → chạy video
+      setState(() {
+        _controller.play();
+        hasPlayedOnce = true;
+      });
+    } else {
+      // ⏩ Lần tiếp theo → chuyển trang
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => RuleGame()),
+      );
+    }
   }
 
   @override
@@ -46,35 +62,11 @@ class _VideoPlayerFromAssetState extends State<VideoPlayerFromAsset> {
               )
             : CircularProgressIndicator(),
       ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            onPressed: () {
-              setState(() {
-                _controller.value.isPlaying
-                    ? _controller.pause()
-                    : _controller.play();
-              });
-            },
-            child: Icon(
-                _controller.value.isPlaying ? Icons.play_arrow : Icons.stop),
-          ),
-          SizedBox(
-            height: 5.h,
-          ),
-          FloatingActionButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => RuleGame(),
-                ),
-              );
-            },
-            child: Icon(Icons.arrow_forward_ios_rounded),
-          ),
-        ],
+      floatingActionButton: FloatingActionButton(
+        onPressed: handleButtonPress,
+        child: Icon(
+          hasPlayedOnce ? Icons.arrow_forward_ios_rounded : Icons.play_arrow,
+        ),
       ),
     );
   }
