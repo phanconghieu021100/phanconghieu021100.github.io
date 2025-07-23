@@ -9,8 +9,8 @@ class LogoAirData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 80.h,
-      left: 150.w,
+      top: 360.h,
+      left: 120.w,
       child: Image.asset(
         'assets/images/logo.png',
         fit: BoxFit.cover,

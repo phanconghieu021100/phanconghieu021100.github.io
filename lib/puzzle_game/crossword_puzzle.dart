@@ -35,10 +35,7 @@ class _VietnameseCrosswordPuzzleState extends State<VietnameseCrosswordPuzzle> {
             decoration: BoxDecoration(),
             child: Stack(
               children: [
-                // Image.asset('assets/images/bgim.png'),
-                // Image.network(
-                //   bgImage,
-                // ),
+                Image.asset('assets/images/bgr_g2.png'),
                 Column(
                   children: [
                     SizedBox(height: 80.h), // Header space
@@ -54,13 +51,13 @@ class _VietnameseCrosswordPuzzleState extends State<VietnameseCrosswordPuzzle> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 SizedBox(
-                                  width: 200,
+                                  width: 440.w,
                                 ),
 
                                 // 🔢 Số thứ tự dòng
                                 _widgetNumberStt(row),
                                 SizedBox(
-                                  width: 200,
+                                  width: 60,
                                 ),
 
                                 // 🔳 Các ô trong dòng đó
@@ -93,8 +90,12 @@ class _VietnameseCrosswordPuzzleState extends State<VietnameseCrosswordPuzzle> {
                                           });
                                         },
                                         child: Padding(
-                                          padding:  EdgeInsets.only(top:8.h),
+                                          padding: EdgeInsets.only(top: 8.h),
                                           child: BoxContent(
+                                            colorText: getCellColor(row, col) ==
+                                                    colorGreen
+                                                ? Colors.red
+                                                : Colors.black,
                                             content: content,
                                             colorContainer:
                                                 getCellColor(row, col),
@@ -121,6 +122,9 @@ class _VietnameseCrosswordPuzzleState extends State<VietnameseCrosswordPuzzle> {
           LogoAirData(),
           StarPosition(
             revealedCells: revealedCells,
+            onRevealChange: () {
+              setState(() {}); // 🛠 Trigger rebuild UI
+            },
           )
         ],
       ),
@@ -197,20 +201,37 @@ class _VietnameseCrosswordPuzzleState extends State<VietnameseCrosswordPuzzle> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          questionText,
-                          style: GoogleFonts.baloo2(
-                            fontSize: 40.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        Text(
-                          ' ($answerLength ký tự)',
-                          style: GoogleFonts.baloo2(
-                            fontSize: 40.sp,
-                            color: Colors.red,
-                            fontWeight: FontWeight.w500,
+                        Flexible(
+                          child: RichText(
+                            text: TextSpan(
+                              style: GoogleFonts.baloo2(
+                                fontSize: 40.sp,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
+                              children: [
+                                TextSpan(text: questionText),
+                                TextSpan(
+                                    text: ' (',
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                    )),
+                                TextSpan(
+                                  text: answerLength.toString(),
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                TextSpan(
+                                    text: ' ký tự)',
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                    )),
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -278,12 +299,12 @@ class _VietnameseCrosswordPuzzleState extends State<VietnameseCrosswordPuzzle> {
         }
       },
       child: Container(
-        width: 30.w,
-        height: 30.h,
+        width: 50.w,
+        height: 50.h,
         alignment: Alignment.center,
-        margin: EdgeInsets.only(
-          right: 350.w,
-        ),
+        // margin: EdgeInsets.only(
+        //   right: 350.w,
+        // ),
         decoration: BoxDecoration(
           color: (row % 2 == 0) ? Colors.red.shade500 : Colors.green.shade500,
           shape: BoxShape.circle,
@@ -293,7 +314,7 @@ class _VietnameseCrosswordPuzzleState extends State<VietnameseCrosswordPuzzle> {
           style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.white,
-              fontSize: 20.sp),
+              fontSize: 18.sp),
         ),
       ),
     );

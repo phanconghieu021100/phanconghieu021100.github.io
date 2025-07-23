@@ -68,7 +68,7 @@ Color getCellColor(int row, int col) {
   return Colors.white;
 }
 
-Color colorGreen = Colors.green.shade300;
+Color colorGreen = Colors.amber.shade200;
 Color colorBrow300 = Colors.brown.shade300;
 
 Future<void> showFlushBar(BuildContext context,

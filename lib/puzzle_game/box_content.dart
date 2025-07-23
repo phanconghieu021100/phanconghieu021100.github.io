@@ -5,10 +5,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BoxContent extends StatelessWidget {
-  const BoxContent({super.key, this.content, this.colorContainer});
+  const BoxContent(
+      {super.key, this.content, this.colorContainer, this.colorText});
 
   final String? content;
   final Color? colorContainer;
+  final Color? colorText;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +24,9 @@ class BoxContent extends StatelessWidget {
       child: Center(
           child: Text(content ?? '',
               style: GoogleFonts.baloo2(
-                  fontWeight: FontWeight.w600, fontSize: 28.sp)
-              )),
+                  fontWeight: FontWeight.w600,
+                  fontSize: 28.sp,
+                  color: colorText))),
     );
   }
 }
