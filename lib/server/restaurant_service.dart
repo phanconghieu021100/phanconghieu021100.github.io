@@ -2,14 +2,17 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:restaurant_with_frog_api/base/api_client.dart';
 import 'package:restaurant_with_frog_api/base/base_response.dart';
+import 'package:restaurant_with_frog_api/flavor/flavor_config.dart';
 import 'package:restaurant_with_frog_api/model/dish.dart';
 import 'package:restaurant_with_frog_api/model/tableitem.dart';
 import 'package:restaurant_with_frog_api/page/dishes/paginated_dishes.dart';
 
 class RestaurantService {
-  static const baseUrl = 'https://restaurant-yz31.onrender.com';
+  // static const baseUrl = 'https://restaurant-yz31.onrender.com';
 
-  static const baseUrl = 'http://localhost:8080';
+  // static const baseUrl = 'http://localhost:8080';
+
+  static String get baseUrl => FlavorConfig.baseUrl;
 
   //----------------------------------Auth--------------------------------------------------------------------------
   static Future<Map<String, dynamic>> register({
