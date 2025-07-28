@@ -3,7 +3,7 @@ class Dish {
   final String name;
   final String description;
   final int price;
-  final String? imageUrl;
+  final List<String>? imageUrls;
   final String category;
   final bool isAvailable;
 
@@ -12,7 +12,7 @@ class Dish {
     required this.name,
     required this.description,
     required this.price,
-    this.imageUrl,
+    this.imageUrls,
     required this.category,
     required this.isAvailable,
   });
@@ -23,7 +23,9 @@ class Dish {
       name: json['name'],
       description: json['description'],
       price: json['price'],
-      imageUrl: json['imageUrl'],
+      imageUrls: (json['imageUrls'] as List?)
+          ?.map((e) => e.toString())
+          .toList(), // safe casting
       category: json['category'],
       isAvailable: json['isAvailable'],
     );

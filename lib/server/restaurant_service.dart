@@ -6,8 +6,8 @@ import 'package:restaurant_with_frog_api/model/tableitem.dart';
 import 'package:restaurant_with_frog_api/page/dishes/paginated_dishes.dart';
 
 class RestaurantService {
-  static const baseUrl = 'https://restaurant-yz31.onrender.com';
-  // static const baseUrl = 'http://localhost:8080';
+  // static const baseUrl = 'https://restaurant-yz31.onrender.com';
+  static const baseUrl = 'http://localhost:8080';
 
   static Future<PaginatedDishes> fetchAllDishes({
     int page = 1,

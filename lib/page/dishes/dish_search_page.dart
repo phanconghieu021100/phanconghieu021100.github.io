@@ -16,6 +16,8 @@ class DishSearchPage extends StatelessWidget {
       create: (_) => DishSearchCubit()..fetchData(),
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.white, // màu nền cố định
+          surfaceTintColor: Colors.transparent,
           title: const Text('Danh sách'),
           actions: [
             GestureDetector(
