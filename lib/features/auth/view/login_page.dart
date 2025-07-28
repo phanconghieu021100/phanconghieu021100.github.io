@@ -13,8 +13,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final emailController = TextEditingController(text: 'phan@yopmail.com');
-  final passwordController = TextEditingController(text: '123123');
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   void _login() {
     context.read<AuthCubit>().login(
