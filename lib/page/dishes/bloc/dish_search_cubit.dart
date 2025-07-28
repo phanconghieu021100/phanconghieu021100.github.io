@@ -12,10 +12,11 @@ class DishSearchCubit extends Cubit<DishSearchState> {
   Future<void> fetchData({int page = 1, bool isLoadMore = false}) async {
     emit(state.copyWith(isLoading: true, errorMessage: null));
     try {
-      final paginated = await RestaurantService.fetchAllDishes(
+      final base = await RestaurantService.fetchAllDishes(
         page: page,
         sort: state.selectedSort,
       );
+      final paginated = base.data;
 
       emit(state.copyWith(
         results: isLoadMore

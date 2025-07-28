@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
+import 'package:restaurant_with_frog_api/features/auth/bloc/auth_cubit.dart';
 import 'package:restaurant_with_frog_api/page/dishes/bloc/dish_search_cubit.dart';
 import 'package:restaurant_with_frog_api/page/dishes/bloc/dish_search_state.dart';
 import 'package:restaurant_with_frog_api/page/dishes/widget/filter_dishes.dart';
@@ -28,7 +29,12 @@ class DishSearchPage extends StatelessWidget {
                         builder: (context) => TableEditorPage(),
                       ));
                 },
-                child: Icon(Icons.motion_photos_paused_rounded))
+                child: Icon(Icons.motion_photos_paused_rounded)),
+            GestureDetector(
+                onTap: () {
+                  context.read<AuthCubit>().logout();
+                },
+                child: Icon(Icons.logout_rounded))
           ],
         ),
         body: BlocBuilder<DishSearchCubit, DishSearchState>(
