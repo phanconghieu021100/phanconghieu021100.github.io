@@ -3,8 +3,8 @@
 echo "🔄 Checkout code branch"
 git checkout restaurant || exit
 
-echo "🛠 Building web..."
-flutter build web || exit
+echo "🛠 Building web (PROD)..."
+flutter build web -t lib/main_dev.dart || exit
 
 echo "📁 Copying build to temp"
 mkdir -p ~/web_temp

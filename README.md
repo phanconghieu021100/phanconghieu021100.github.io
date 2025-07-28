@@ -1,4 +1,5 @@
-bash deploy_web.sh
+bash deploy_web_product.sh
+bash deploy_web_dev.sh
 
 # restaurant_with_frog_api
 
