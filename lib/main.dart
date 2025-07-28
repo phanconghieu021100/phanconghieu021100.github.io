@@ -1,35 +1,26 @@
-import 'package:flutter/material.dart';
-import 'package:restaurant_with_frog_api/page/dishes/dish_search_page.dart';
-import 'package:restaurant_with_frog_api/page/table/table_editor_page.dart';
+// ignore_for_file: prefer_const_constructors
 
-void main() {
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:restaurant_with_frog_api/features/auth/bloc/auth_cubit.dart';
+import 'package:restaurant_with_frog_api/features/auth/view/splash_page.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return BlocProvider(
+      create: (_) => AuthCubit(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        home: SplashPage(), // dùng splash để đợi check auth
       ),
-      home: const MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: DishSearchPage(),
     );
   }
 }

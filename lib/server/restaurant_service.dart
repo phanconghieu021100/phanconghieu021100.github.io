@@ -4,10 +4,66 @@ import 'package:restaurant_with_frog_api/base/base_response.dart';
 import 'package:restaurant_with_frog_api/model/dish.dart';
 import 'package:restaurant_with_frog_api/model/tableitem.dart';
 import 'package:restaurant_with_frog_api/page/dishes/paginated_dishes.dart';
+// static const baseUrl = 'https://restaurant-yz31.onrender.com';
 
 class RestaurantService {
-  // static const baseUrl = 'https://restaurant-yz31.onrender.com';
   static const baseUrl = 'http://localhost:8080';
+
+  //----------------------------------Auth--------------------------------------------------------------------------
+
+  static Future<Map<String, dynamic>> register({
+    required String email,
+    required String password,
+    required String username,
+    String role = 'user',
+  }) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/auth/register'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'email': email,
+        'password': password,
+        'username': username,
+        'role': role,
+      }),
+    );
+
+    return _handleResponse(response);
+  }
+
+  static Future<Map<String, dynamic>> login({
+    required String email,
+    required String password,
+  }) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/auth/login'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'email': email, 'password': password}),
+    );
+
+    return _handleResponse(response);
+  }
+
+  static Future<Map<String, dynamic>> refreshToken(String refreshToken) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/auth/refresh_token'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'refreshToken': refreshToken}),
+    );
+
+    return _handleResponse(response);
+  }
+
+  static Map<String, dynamic> _handleResponse(http.Response response) {
+    final Map<String, dynamic> body = jsonDecode(response.body);
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return body;
+    } else {
+      throw Exception(body['error'] ?? 'Có lỗi xảy ra');
+    }
+  }
+
+  //------------------------------------------------------------------------------------------------------------------------
 
   static Future<PaginatedDishes> fetchAllDishes({
     int page = 1,
