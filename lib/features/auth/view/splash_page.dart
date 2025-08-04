@@ -15,13 +15,13 @@ class SplashPage extends StatelessWidget {
         if (state is AuthAuthenticated) {
           return  DishSearchPage();
         } else if (state is AuthUnauthenticated) {
-          return const LoginPage();
+          return  LoginPage();
         } else if (state is AuthLoading || state is AuthInitial) {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
         } else {
-          return const LoginPage(); // fallback
+          return  LoginPage(); // fallback
         }
       },
     );

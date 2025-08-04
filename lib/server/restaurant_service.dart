@@ -1,17 +1,13 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:restaurant_with_frog_api/base/api_client.dart';
 import 'package:restaurant_with_frog_api/base/base_response.dart';
 import 'package:restaurant_with_frog_api/flavor/flavor_config.dart';
 import 'package:restaurant_with_frog_api/model/dish.dart';
 import 'package:restaurant_with_frog_api/model/tableitem.dart';
 import 'package:restaurant_with_frog_api/page/dishes/paginated_dishes.dart';
+import 'package:restaurant_with_frog_api/base/dio_client.dart'; // 👈 đảm bảo import đúng file chứa DioClient
+
+final DioClient _client = DioClient();
 
 class RestaurantService {
-  // static const baseUrl = 'https://restaurant-yz31.onrender.com';
-
-  // static const baseUrl = 'http://localhost:8080';
-
   static String get baseUrl => FlavorConfig.baseUrl;
 
   //----------------------------------Auth--------------------------------------------------------------------------
@@ -21,7 +17,7 @@ class RestaurantService {
     required String username,
     String role = 'user',
   }) async {
-    return await request(
+    return await _client.request(
       path: '$baseUrl/auth/register',
       method: RequestMethod.post,
       sendToken: false,
@@ -38,7 +34,7 @@ class RestaurantService {
     required String email,
     required String password,
   }) async {
-    return await request(
+    return await _client.request(
       path: '$baseUrl/auth/login',
       method: RequestMethod.post,
       sendToken: false,
@@ -50,7 +46,7 @@ class RestaurantService {
   }
 
   static Future<Map<String, dynamic>> refreshToken(String refreshToken) async {
-    return await request(
+    return await _client.request(
       path: '$baseUrl/auth/refresh_token',
       method: RequestMethod.post,
       sendToken: false,
@@ -66,7 +62,7 @@ class RestaurantService {
     int page = 1,
     String? sort,
   }) async {
-    final res = await request(
+    final res = await _client.request(
       path: '$baseUrl/dishes',
       method: RequestMethod.get,
       query: {
@@ -84,88 +80,84 @@ class RestaurantService {
   static Future<List<Dish>> searchDishes(
     String keyword, {
     String? sort,
-    bool matchAll = true, // 👈 thêm flag matchAll
+    bool matchAll = true,
   }) async {
     final queryParams = {
       'keyword': keyword,
       if (sort != null) 'sort': sort,
-      if (matchAll) 'match': 'all', // 👈 thêm nếu matchAll bật
+      if (matchAll) 'match': 'all',
     };
 
-    final uri = Uri.parse('$baseUrl/dishes_search')
-        .replace(queryParameters: queryParams);
+    final res = await _client.request(
+      path: '$baseUrl/dishes_search',
+      method: RequestMethod.get,
+      query: queryParams,
+    );
 
-    final response = await http.get(uri);
-    final body = jsonDecode(response.body);
-
-    final List list = body['results'];
+    final List list = res['results'];
     return list.map((e) => Dish.fromJson(e)).toList();
   }
 
   static Future<Dish> getDishById(String id) async {
-    final response = await http.get(Uri.parse('$baseUrl/dishes/$id'));
-    final body = jsonDecode(response.body);
-    return Dish.fromJson(body);
+    final res = await _client.request(
+      path: '$baseUrl/dishes/$id',
+      method: RequestMethod.get,
+    );
+    return Dish.fromJson(res);
   }
 
   static Future<Dish> createDish(Map<String, dynamic> data) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/dishes'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(data),
+    final res = await _client.request(
+      path: '$baseUrl/dishes',
+      method: RequestMethod.post,
+      body: data,
     );
-    return Dish.fromJson(jsonDecode(response.body));
+    return Dish.fromJson(res);
   }
 
   static Future<Dish> updateDish(String id, Map<String, dynamic> data) async {
-    final response = await http.put(
-      Uri.parse('$baseUrl/dishes/$id'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(data),
+    final res = await _client.request(
+      path: '$baseUrl/dishes/$id',
+      method: RequestMethod.put,
+      body: data,
     );
-    return Dish.fromJson(jsonDecode(response.body));
+    return Dish.fromJson(res);
   }
 
   static Future<void> deleteDish(String id) async {
-    await http.delete(Uri.parse('$baseUrl/dishes/$id'));
+    await _client.request(
+      path: '$baseUrl/dishes/$id',
+      method: RequestMethod.delete,
+    );
   }
 
-//------------------------------------Table---------------------------------------------------------------------------
+  //------------------------------------Table---------------------------------------------------------------------------
   /// GET /tables - Lấy danh sách tất cả bàn
   static Future<List<TableItem>> fetchAllTables() async {
-    final response = await http.get(Uri.parse('$baseUrl/tables'));
+    final res = await _client.request(
+      path: '$baseUrl/tables',
+      method: RequestMethod.get,
+    );
 
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body)['results'] as List;
-      return data.map((e) => TableItem.fromJson(e)).toList();
-    } else {
-      throw Exception('Lỗi khi load danh sách bàn');
-    }
+    final List data = res['results'];
+    return data.map((e) => TableItem.fromJson(e)).toList();
   }
 
   /// POST /tables - Lưu hoặc cập nhật 1 bàn
   static Future<void> saveSingleTable(TableItem table) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/tables'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(table.toJson()),
+    await _client.request(
+      path: '$baseUrl/tables',
+      method: RequestMethod.post,
+      body: table.toJson(),
     );
-
-    if (response.statusCode != 200) {
-      throw Exception('Lỗi khi lưu bàn');
-    }
   }
 
   /// POST /tables/save-all - Lưu toàn bộ danh sách bàn
   static Future<void> saveAllTables(List<TableItem> tables) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/tables/save_all'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(tables.map((e) => e.toJson()).toList()),
+    await _client.request(
+      path: '$baseUrl/tables/save_all',
+      method: RequestMethod.post,
+      body: tables.map((e) => e.toJson()).toList(), // ✅ giờ không còn lỗi
     );
-
-    if (response.statusCode != 200) {
-      throw Exception('Lỗi khi lưu danh sách bàn');
-    }
   }
 }
