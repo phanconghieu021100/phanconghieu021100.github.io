@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:path_provider/path_provider.dart';
 import '../flavor/flavor_config.dart';
@@ -20,7 +21,7 @@ class DioClient {
       baseUrl: FlavorConfig.baseUrl,
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 15),
-      sendTimeout: const Duration(seconds: 10),
+      sendTimeout: kIsWeb ? Duration.zero : const Duration(seconds: 10),
       contentType: Headers.jsonContentType,
       responseType: ResponseType.json,
       validateStatus: (status) => status != null && status < 500,
@@ -39,7 +40,8 @@ class DioClient {
       },
       onResponse: (response, handler) {
         final start = response.requestOptions.extra['startTime'] as DateTime?;
-        final duration = start != null ? DateTime.now().difference(start) : null;
+        final duration =
+            start != null ? DateTime.now().difference(start) : null;
         _printCurl(response.requestOptions, response.statusCode, duration);
         return handler.next(response);
       },
@@ -75,15 +77,19 @@ class DioClient {
 
   void _printCurl(RequestOptions options, int? statusCode, Duration? duration) {
     final token = options.headers['Authorization'];
-    final shortToken = token is String && token.length > 20 ? '${token.substring(0, 20)}...' : token;
+    final shortToken = token is String && token.length > 20
+        ? '${token.substring(0, 20)}...'
+        : token;
 
     final buffer = StringBuffer();
     buffer.writeln('🌀 cURL request:');
     buffer.writeln('• Method: ${options.method}');
     buffer.writeln('• URL: ${options.uri}');
     if (shortToken != null) buffer.writeln('• Token: $shortToken');
-    if (duration != null) buffer.writeln('• Duration: ${duration.inMilliseconds}ms');
-    if (options.data != null) buffer.writeln('• Body: ${jsonEncode(options.data)}');
+    if (duration != null)
+      buffer.writeln('• Duration: ${duration.inMilliseconds}ms');
+    if (options.data != null)
+      buffer.writeln('• Body: ${jsonEncode(options.data)}');
     buffer.writeln('---');
     print(buffer.toString());
   }
@@ -116,9 +122,10 @@ class DioClient {
       if (status >= 200 && status < 300) {
         return response.data;
       } else {
-        final errorMessage = response.data is Map && response.data['error'] != null
-            ? response.data['error']
-            : 'Lỗi từ server';
+        final errorMessage =
+            response.data is Map && response.data['error'] != null
+                ? response.data['error']
+                : 'Lỗi từ server';
         throw Exception(errorMessage);
       }
     } on DioException catch (e) {
